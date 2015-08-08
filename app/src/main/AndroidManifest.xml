@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProcessingInterface"
+            android:name=".GameActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
 
 

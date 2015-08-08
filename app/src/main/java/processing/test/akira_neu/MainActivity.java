@@ -9,7 +9,7 @@ import android.widget.Button;
 public class MainActivity extends Activity
 {
 
-    ProcessingInterface pi;
+
     Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,7 +20,7 @@ public class MainActivity extends Activity
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, ProcessingInterface.class);
+                Intent i = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(i);
             }
         });

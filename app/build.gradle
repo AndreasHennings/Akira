@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "processing.test.ProcessingInterface"
+        applicationId "processing.test.GameActivity"
         minSdkVersion 15
         targetSdkVersion 15
     }
