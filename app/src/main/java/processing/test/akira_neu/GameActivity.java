@@ -6,11 +6,15 @@ import processing.core.*;
 public class GameActivity extends PApplet
 {
 
+
+
     GameEngine gameEngine;
     boolean gameRunning;
 
     PShape level;
     String filename = "testlevel.svg";
+
+    //view parameters
 
     float viewX;
     float viewY;
