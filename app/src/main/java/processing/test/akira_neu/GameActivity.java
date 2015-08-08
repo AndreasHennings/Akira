@@ -1,12 +1,13 @@
 package processing.test.akira_neu;
 
+import java.util.ArrayList;
+
+import objects.Obj;
 import processing.core.*;
 
 
 public class GameActivity extends PApplet
 {
-
-
 
     GameEngine gameEngine;
     boolean gameRunning;
@@ -16,6 +17,7 @@ public class GameActivity extends PApplet
 
     //view parameters
 
+    float scaleFactor;
     float viewX;
     float viewY;
 
@@ -24,34 +26,48 @@ public class GameActivity extends PApplet
         noLoop();
         level=loadShape(filename);
 
-        gameEngine = new GameEngine(level);
+        gameEngine = new GameEngine();
         gameRunning = true;
 
 
-
+        scaleFactor=(float)0.5;
         viewX=0;
         viewY=0;
     }
 
     public void draw()
     {
-
-
-            gameEngine.display();
-
+        gameEngine.run();
     }
+
+
+
 
     public class GameEngine
     {
-        public GameEngine(PShape level)
+        ArrayList<Obj>allObjs;      //  a list containing all objects in a level
+        ArrayList<Obj>visibleObjs;  //  visible objects for collision testing
+        ArrayList<Obj>dynamicObjs;  //  dynamic objects for position updating
+
+        public GameEngine()
         {
 
         }
 
+        public void run()
+        {
+           
+                display();
+
+        }
+
+
+
+
         public void display()
         {
+            scale(scaleFactor);
             shape(level, viewX, viewY);
-
         }
 
     }

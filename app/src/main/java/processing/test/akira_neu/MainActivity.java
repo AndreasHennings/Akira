@@ -16,12 +16,13 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, GameActivity.class);
-                startActivity(i);
+                Intent startGame = new Intent(MainActivity.this, GameActivity.class);
+                startActivity(startGame);
             }
         });
 
