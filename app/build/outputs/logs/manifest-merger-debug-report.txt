@@ -1,48 +1,54 @@
 -- Merging decision tree log ---
 manifest
-ADDED from AndroidManifest.xml:1:1
+ADDED from AndroidManifest.xml:2:1
 	package
-		ADDED from AndroidManifest.xml:1:120
+		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	android:versionName
-		ADDED from AndroidManifest.xml:1:94
+		ADDED from AndroidManifest.xml:5:5
 	android:versionCode
-		ADDED from AndroidManifest.xml:1:70
+		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	xmlns:android
-		ADDED from AndroidManifest.xml:1:11
+		ADDED from AndroidManifest.xml:2:11
 uses-sdk
-ADDED from AndroidManifest.xml:1:156
+ADDED from AndroidManifest.xml:7:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	android:minSdkVersion
-		ADDED from AndroidManifest.xml:1:166
+		ADDED from AndroidManifest.xml:7:15
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 application
-ADDED from AndroidManifest.xml:1:194
+ADDED from AndroidManifest.xml:10:5
 	android:label
-		ADDED from AndroidManifest.xml:1:263
+		ADDED from AndroidManifest.xml:13:9
 	android:debuggable
-		ADDED from AndroidManifest.xml:1:207
+		ADDED from AndroidManifest.xml:11:9
 	android:icon
-		ADDED from AndroidManifest.xml:1:233
-activity#processing.test.akira_neu.akira_neu
-ADDED from AndroidManifest.xml:1:289
-	android:theme
-		ADDED from AndroidManifest.xml:1:325
+		ADDED from AndroidManifest.xml:12:9
+activity#processing.test.akira_neu.MainActivity
+ADDED from AndroidManifest.xml:14:9
+	android:label
+		ADDED from AndroidManifest.xml:16:13
 	android:name
-		ADDED from AndroidManifest.xml:1:299
+		ADDED from AndroidManifest.xml:15:13
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:1:373
+ADDED from AndroidManifest.xml:18:13
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:1:388
+ADDED from AndroidManifest.xml:19:17
 	android:name
-		ADDED from AndroidManifest.xml:1:396
+		ADDED from AndroidManifest.xml:19:25
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:1:439
+ADDED from AndroidManifest.xml:20:17
 	android:name
-		ADDED from AndroidManifest.xml:1:449
+		ADDED from AndroidManifest.xml:20:27
+activity#processing.test.akira_neu.ProcessingInterface
+ADDED from AndroidManifest.xml:23:9
+	android:theme
+		ADDED from AndroidManifest.xml:25:13
+	android:name
+		ADDED from AndroidManifest.xml:24:13

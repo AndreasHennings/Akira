@@ -6,23 +6,26 @@
 
     <uses-sdk android:minSdkVersion="15" />
 
-   
+
     <application
         android:debuggable="true"
         android:icon="@drawable/icon"
         android:label="akira_neu" >
         <activity
-            android:name=".akira_neu"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".ProcessingInterface"
+            android:theme="@android:style/Theme.NoTitleBar" >
+
+
+
         </activity>
     </application>
 
