@@ -13,18 +13,22 @@ public class GameActivity extends PApplet
     boolean gameRunning;
 
     PShape level;
-    String filename = "testlevel.svg";
+    PImage image;
+
+    String filenameLevel = "testlevel.svg";
+    String filenameImage ="testbild.jpg";
 
     //view parameters
 
-    float scaleFactor;
+    float scaleFactor;  //scale of view
     float viewX;
     float viewY;
 
     public void setup()
     {
-        noLoop();
-        level=loadShape(filename);
+
+        image=loadImage(filenameImage);
+        level=loadShape(filenameLevel);
 
         gameEngine = new GameEngine();
         gameRunning = true;
@@ -41,8 +45,6 @@ public class GameActivity extends PApplet
     }
 
 
-
-
     public class GameEngine
     {
         ArrayList<Obj>allObjs;      //  a list containing all objects in a level
@@ -56,16 +58,13 @@ public class GameActivity extends PApplet
 
         public void run()
         {
-           
-                display();
-
+            display();
         }
-
-
 
 
         public void display()
         {
+            image(image,0,0);
             scale(scaleFactor);
             shape(level, viewX, viewY);
         }
