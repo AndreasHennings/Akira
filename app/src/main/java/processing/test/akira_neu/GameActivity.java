@@ -10,7 +10,6 @@ public class GameActivity extends PApplet
 {
 
     GameEngine gameEngine;
-    boolean gameRunning;
 
     PShape level;
     PImage image;
@@ -31,7 +30,6 @@ public class GameActivity extends PApplet
         level=loadShape(filenameLevel);
 
         gameEngine = new GameEngine();
-        gameRunning = true;
 
 
         scaleFactor=(float)0.5;
@@ -53,7 +51,27 @@ public class GameActivity extends PApplet
 
         public GameEngine()
         {
+            initObjects();
 
+        }
+
+        private void initObjects()
+        {
+            initBlocks();
+            //initEnemies();
+            //initPlayer();
+
+        }
+
+        private void initBlocks()
+        {
+            PShape blocks = level.findChild("blocks");
+            if (blocks != null && blocks.getChildCount()>0)
+            {
+
+
+
+            }
         }
 
         public void run()
@@ -68,6 +86,8 @@ public class GameActivity extends PApplet
             scale(scaleFactor);
             shape(level, viewX, viewY);
         }
+
+
 
     }
 

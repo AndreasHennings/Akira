@@ -3,7 +3,7 @@ package objects;
 /**
  * Created by aend on 08.08.15.
  */
-public class Obj
+public abstract class Obj
 {
     //position and dimension
 
