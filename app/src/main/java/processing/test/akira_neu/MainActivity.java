@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+
+//Start screen with menu
+
 public class MainActivity extends Activity
 {
-
-
-    Button button;
+    Button button;  //start button
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -18,6 +19,7 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         button = (Button) findViewById(R.id.button);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
