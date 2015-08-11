@@ -31,10 +31,12 @@ public class GameActivity extends PApplet
         image=loadImage(filenameImage);
         level=loadShape(filenameLevel);
 
+        size(displayWidth, displayHeight);
+
         gameEngine = new GameEngine();
 
 
-        scaleFactor=(float)0.5;  //scale factor of level. Can be adjusted to fit to differen screen sizes
+        scaleFactor=(float)0.5;  //scale factor of level. Can be adjusted to fit to different screen sizes
         viewX=0;  //start view at 0,0 will later be adjusted to player position
         viewY=0;
     }
