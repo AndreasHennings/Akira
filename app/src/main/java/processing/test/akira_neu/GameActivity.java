@@ -2,6 +2,7 @@ package processing.test.akira_neu;
 
 import java.util.ArrayList;
 
+import objects.Enemies;
 import objects.Obj;
 import objects.StaticBlock;
 import processing.core.*;
@@ -55,6 +56,7 @@ public class GameActivity extends PApplet
     public class GameEngine  //inner class
     {
         StaticBlock[] staticBlock;
+        Enemies[] enemies;
         ArrayList<Obj>allObjs;      //  a list containing all objects in a level
         ArrayList<Obj>visibleObjs;  //  visible objects for collision testing
         ArrayList<Obj>dynamicObjs;  //  dynamic objects for position updating
@@ -90,9 +92,35 @@ public class GameActivity extends PApplet
             }
         }
 
+        private void initEnemies()
+        {
+            PShape enemiesShape = level.findChild("enemies");
+            if (enemies != null && enemiesShape.getChildCount()>0)
+            {
+                PShape[]allEnemies=enemiesShape.getChildren();
+
+                for (int i= 0; i<allEnemies.length; i++)
+                {
+                    float[]params=allEnemies[i].getParams();
+                    enemies[i]= new Enemies(allEnemies[i],params[0],params[1],params[2],params[3]);
+                }
+
+
+            }
+        }
+
         public void run()
         {
+            update();
             display();
+        }
+
+        public void update()
+        {
+            for (int i=0; i<enemies.length; i++)
+            {
+                enemies[i].update();
+            }
         }
 
 
