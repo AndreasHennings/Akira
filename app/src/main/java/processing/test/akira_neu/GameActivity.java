@@ -90,9 +90,10 @@ public class GameActivity extends PApplet
 
         public void display()
         {
-            image(image,0,0);
+            background(123,43,98);
             scale(scaleFactor);
             shape(level, viewX, viewY);
+            viewX+=0.5;
         }
 
 
