@@ -9,7 +9,7 @@ import processing.core.*;
 public class GameActivity extends PApplet
 {
 
-    GameEngine gameEngine;
+    GameEngine gameEngine; //inner class
 
     PShape level;  //Declaring a new .svg file. Level contains all objects of a level
     PImage image;  //Declaring a new .jpg file which  will be used as a background
@@ -51,7 +51,7 @@ public class GameActivity extends PApplet
      /********************************************************************************************/
 
 
-    public class GameEngine
+    public class GameEngine  //inner class
     {
         ArrayList<Obj>allObjs;      //  a list containing all objects in a level
         ArrayList<Obj>visibleObjs;  //  visible objects for collision testing
