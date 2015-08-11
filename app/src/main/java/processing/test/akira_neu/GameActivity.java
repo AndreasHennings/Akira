@@ -3,6 +3,7 @@ package processing.test.akira_neu;
 import java.util.ArrayList;
 
 import objects.Obj;
+import objects.StaticBlock;
 import processing.core.*;
 
 
@@ -53,6 +54,7 @@ public class GameActivity extends PApplet
 
     public class GameEngine  //inner class
     {
+        StaticBlock[] staticBlock;
         ArrayList<Obj>allObjs;      //  a list containing all objects in a level
         ArrayList<Obj>visibleObjs;  //  visible objects for collision testing
         ArrayList<Obj>dynamicObjs;  //  dynamic objects for position updating
@@ -76,7 +78,13 @@ public class GameActivity extends PApplet
             PShape blocks = level.findChild("blocks");
             if (blocks != null && blocks.getChildCount()>0)
             {
+                PShape[]allBlocks=blocks.getChildren();
 
+                for (int i= 0; i<allBlocks.length; i++)
+                {
+                    float[]params=allBlocks[i].getParams();
+                    staticBlock[i]= new StaticBlock(params[0],params[1],params[2],params[3]);
+                }
 
 
             }
