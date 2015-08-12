@@ -7,7 +7,7 @@ import processing.core.PShape;
  */
 public class Enemies extends Obj
 {
-    //speed
+
     double xSpeed;
     double ySpeed;
 
