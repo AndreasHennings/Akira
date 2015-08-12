@@ -22,7 +22,7 @@ public class GameActivity extends PApplet
     //filenames still hardcoded for testing purposes. Will be replaced later
 
     String filenameLevel = "testlevel.svg";
-    String filenameImage ="testbild.jpg";
+    String filenameImage = "testbild.jpg";
 
     //view parameters
 
@@ -107,7 +107,8 @@ public class GameActivity extends PApplet
 
                 for (int i = 0; i<allEnemies.length; i++)
                 {
-                    enemies[i] = new Enemy(allEnemies[i]);
+                    float rnd = random (-2,2);
+                    enemies[i] = new Enemy(allEnemies[i],rnd);
 
                 }
             }
@@ -147,6 +148,8 @@ public class GameActivity extends PApplet
 
         private void drawGui()
         {
+            textSize(32);
+            text("Life",50,50);
 
         }
 

@@ -11,10 +11,10 @@ public class Enemy extends Obj
     float xSpeed;
     float ySpeed;
 
-    public Enemy(PShape shape)
+    public Enemy(PShape shape, float rnd)
     {
         super(shape);
-        xSpeed = 0;
+        xSpeed = rnd;
         ySpeed = 0;
     }
 
