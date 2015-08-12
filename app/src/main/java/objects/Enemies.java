@@ -3,24 +3,23 @@ package objects;
 import processing.core.PShape;
 
 /**
- * Created by judith on 11.08.2015.
+ * Created by judith on 11.08.15.
  */
 public class Enemies extends Obj
 {
-    PShape shape;
+
     double xSpeed;
     double ySpeed;
-    public Enemies(PShape shape, double x,double y,double w,double h)
+
+    public Enemies(PShape shape)
     {
-        super(x,y,w,h);
-        this.shape=shape;
-        xSpeed=1;
-        ySpeed=0;
+        super(shape);
+        xSpeed = 1;
+        ySpeed = 0;
     }
 
     public void update()
     {
-        shape.translate((float)xSpeed,(float)ySpeed);
-
+        shape.translate((float) xSpeed, (float) ySpeed);
     }
 }
