@@ -1,11 +1,15 @@
 package objects;
 
+import processing.core.PShape;
+
 /**
  * Created by judith on 11.08.2015.
  */
-public class StaticBlock extends Obj {
+public class StaticBlock extends Obj
+{
 
-    public StaticBlock(double x, double y, double w, double h){
-        super(x, y,w,h);
+    public StaticBlock(PShape shape)
+    {
+        super(shape);
     }
 }

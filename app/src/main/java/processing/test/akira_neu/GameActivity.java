@@ -2,6 +2,7 @@ package processing.test.akira_neu;
 
 import java.util.ArrayList;
 
+import objects.Enemies;
 import objects.Obj;
 import objects.StaticBlock;
 import processing.core.*;
@@ -55,9 +56,10 @@ public class GameActivity extends PApplet
     public class GameEngine  //inner class
     {
         StaticBlock[] staticBlock;
-        ArrayList<Obj>allObjs;      //  a list containing all objects in a level
-        ArrayList<Obj>visibleObjs;  //  visible objects for collision testing
-        ArrayList<Obj>dynamicObjs;  //  dynamic objects for position updating
+        Enemies[] enemies;
+        //ArrayList<Obj>allObjs;      //  a list containing all objects in a level
+        //ArrayList<Obj>visibleObjs;  //  visible objects for collision testing
+        //ArrayList<Obj>dynamicObjs;  //  dynamic objects for position updating
 
         public GameEngine()
         {
@@ -68,37 +70,66 @@ public class GameActivity extends PApplet
         private void initObjects()
         {
             initBlocks();
-            //initEnemies();
+            initEnemies();
             //initPlayer();
 
         }
 
         private void initBlocks()
         {
-            PShape blocks = level.findChild("blocks");
-            if (blocks != null && blocks.getChildCount()>0)
+            PShape blocksShape = level.findChild("blocks");
+
+            if (blocksShape != null && blocksShape.getChildCount()>0)
             {
-                PShape[]allBlocks=blocks.getChildren();
+                staticBlock = new StaticBlock[blocksShape.getChildCount()];
+                PShape[]allBlocks=blocksShape.getChildren();
 
                 for (int i= 0; i<allBlocks.length; i++)
                 {
-                    float[]params=allBlocks[i].getParams();
-                    staticBlock[i]= new StaticBlock(params[0],params[1],params[2],params[3]);
+
+                    staticBlock[i]= new StaticBlock(allBlocks[i]);
                 }
 
 
             }
         }
 
+        private void initEnemies()
+        {
+            PShape enemiesShape = level.findChild("enemies");
+
+            if (enemiesShape != null && enemiesShape.getChildCount()>0)
+            {
+                enemies = new Enemies[enemiesShape.getChildCount()];
+                PShape[] allEnemies = enemiesShape.getChildren();
+
+                for (int i = 0; i<allEnemies.length; i++)
+                {
+                    enemies[i] = new Enemies(allEnemies[i]);
+
+                }
+            }
+
+        }
+
         public void run()
         {
+            update();
             display();
+        }
+
+        private void update()
+        {
+            for (int i=0; i<enemies.length; i++)
+            {
+                enemies[i].update();
+            }
         }
 
 
         public void display()
         {
-            image(image,0,0);
+            background(120,40,100);
             scale(scaleFactor);
             shape(level, viewX, viewY);
         }
