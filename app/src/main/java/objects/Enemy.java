@@ -28,5 +28,8 @@ public class Enemy extends Obj
         x+=xSpeed;
         y+=ySpeed;
         shape.translate(xSpeed,ySpeed);
+
     }
+
+
 }

@@ -14,15 +14,18 @@ import processing.core.PShape;
 public class GameActivity extends PApplet
 {
 
+
     GameEngine gameEngine; //inner class
 
     PShape level;  //Declaring a new .svg file. Level contains all objects of a level
     PImage image;  //Declaring a new .jpg file which  will be used as a background
 
+
     //filenames still hardcoded for testing purposes. Will be replaced later
 
     String filenameLevel = "testlevel.svg";
     String filenameImage = "testbild.jpg";
+
 
     //view parameters
 
@@ -32,9 +35,11 @@ public class GameActivity extends PApplet
 
     public void setup() //everything inside will be done just once
     {
+        orientation(LANDSCAPE);
         //load resources from assets folder
         image=loadImage(filenameImage);
         level=loadShape(filenameLevel);
+
 
         size(displayWidth, displayHeight);
 
@@ -139,17 +144,29 @@ public class GameActivity extends PApplet
 
         public void display()
         {
-            background(120,40,100);
+            background(120, 40, 100);
 
             scale(scaleFactor);
+
             shape(level, viewX, viewY);
+
             drawGui();
         }
 
         private void drawGui()
         {
-            textSize(32);
-            text("Life",50,50);
+            drawStatusBar();
+        }
+
+        private void drawStatusBar()
+        {
+            stroke(255,255,255);
+            textSize(40);
+            text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold(), 20, 50);
+        }
+
+        private void drawButtons()
+        {
 
         }
 
