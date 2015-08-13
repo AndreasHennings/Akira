@@ -13,8 +13,6 @@ import processing.core.PShape;
 
 public class GameActivity extends PApplet
 {
-
-
     GameEngine gameEngine; //inner class
 
     PShape level;  //Declaring a new .svg file. Level contains all objects of a level
@@ -33,20 +31,24 @@ public class GameActivity extends PApplet
     float viewX;  // parameters needed for scrolling view. Determine the position of the
     float viewY;  // upper left corner of the level
 
+    int h5;
+
     public void setup() //everything inside will be done just once
     {
         orientation(LANDSCAPE);
+
         //load resources from assets folder
         image=loadImage(filenameImage);
         level=loadShape(filenameLevel);
 
 
         size(displayWidth, displayHeight);
+        h5=height/5;
 
         gameEngine = new GameEngine();
 
 
-        scaleFactor=(float)0.5;  //scale factor of level. Can be adjusted to fit to different screen sizes
+        //scaleFactor=(float)0.5;  //scale factor of level. Can be adjusted to fit to different screen sizes
         viewX=0;  //start view at 0,0 will later be adjusted to player position
         viewY=0;
     }
@@ -146,7 +148,7 @@ public class GameActivity extends PApplet
         {
             background(120, 40, 100);
 
-            scale(scaleFactor);
+            //scale(scaleFactor);
 
             shape(level, viewX, viewY);
 
@@ -156,17 +158,32 @@ public class GameActivity extends PApplet
         private void drawGui()
         {
             drawStatusBar();
+            drawButtons();
         }
 
         private void drawStatusBar()
         {
-            stroke(255,255,255);
+            fill(255, 255, 255);
             textSize(40);
             text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold(), 20, 50);
         }
 
         private void drawButtons()
         {
+            fill(0,0,255,100);
+            rect(0, height - h5, h5, h5);
+            rect(width-h5,height-h5,h5,h5);
+
+            fill(0,255,0,100);
+            rect(0,height-2*h5,h5,h5);
+            rect(width-h5,height-2*h5,h5,h5);
+
+            fill(255,0,0,100);
+            rect(h5,height-h5,h5,h5);
+            rect(width-2*h5,height-h5,h5,h5);
+
+
+
 
         }
 
