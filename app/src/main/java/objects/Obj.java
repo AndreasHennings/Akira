@@ -31,4 +31,14 @@ public abstract class Obj
         this.h=params[3];
     }
 
+    public float getCenterX()
+    {
+        return x+(w/2);
+    }
+
+    public float getCenterY()
+    {
+        return y+(h/2);
+    }
+
 }
