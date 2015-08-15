@@ -27,4 +27,12 @@ public class Player extends Obj
     {
         return gold;
     }
+
+    public void move(float xSpeed, float ySpeed)
+    {
+        x+=xSpeed;
+        y+=ySpeed;
+        shape.translate(xSpeed,ySpeed);
+    }
+
 }
