@@ -5,11 +5,9 @@ import processing.core.PShape;
 /**
  * Created by judith on 11.08.15.
  */
-public class Enemy extends Obj
+public class Enemy extends AbstractDynamicObject
 {
 
-    float xSpeed;
-    float ySpeed;
 
     public Enemy(PShape shape, float rnd)
     {
@@ -18,18 +16,12 @@ public class Enemy extends Obj
         ySpeed = 0;
     }
 
-    public void update()
+    public void update(StaticBlock[]staticBlock)
     {
-        move();
+        super.update(staticBlock);
     }
 
-    public void move()
-    {
-        x+=xSpeed;
-        y+=ySpeed;
-        shape.translate(xSpeed,ySpeed);
 
-    }
 
 
 }

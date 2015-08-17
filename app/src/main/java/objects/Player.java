@@ -6,7 +6,7 @@ import processing.core.PShape;
 /**
  * Created by aend on 12.08.15.
  */
-public class Player extends Obj
+public class Player extends AbstractDynamicObject
 {
     private int health;
     private int gold;
@@ -16,6 +16,12 @@ public class Player extends Obj
         super(shape);
         health=100;
         gold=0;
+    }
+
+    public void update(StaticBlock[]staticBlock)
+    {
+        super.update(staticBlock);
+        xSpeed*=0.99;
     }
 
     public int getHealth()
@@ -28,11 +34,12 @@ public class Player extends Obj
         return gold;
     }
 
-    public void move(float xSpeed, float ySpeed)
+    public void setSpeed(float xSpeed, float ySpeed)
     {
-        x+=xSpeed;
-        y+=ySpeed;
-        shape.translate(xSpeed,ySpeed);
+        this.xSpeed=xSpeed;
+        this.ySpeed=ySpeed;
     }
+
+
 
 }

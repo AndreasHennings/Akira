@@ -17,24 +17,20 @@ public class GameActivity extends PApplet
     float h5;
 
     StaticBlock[] staticBlock;
-    Enemy[] enemies;
-
+    public Enemy[] enemies;
     public Player player;
 
     String filenameLevel = "testlevel.svg";
     //view parameters
 
-
     float scaleFactor;  //scale of view
     float viewX;  // parameters needed for scrolling view. Determine the position of the
     float viewY;  // upper left corner of the level
 
-
-
-
     public void setup() //everything inside will be done just once
     {
         orientation(LANDSCAPE);
+
         size(displayWidth, displayHeight);
         h5=height/5;
 
@@ -60,6 +56,9 @@ public class GameActivity extends PApplet
 
     private void scroll()
     {
+        viewX=width/2-player.getCenterX();
+        viewY=height/2-player.getCenterY();
+        /*
         if (viewX>width/2-player.getCenterX())
         {
             viewX--;
@@ -79,13 +78,17 @@ public class GameActivity extends PApplet
         {
             viewY++;
         }
+        */
     }
 
     private void update()
     {
+        player.update(staticBlock);
+
         for (int i=0; i<enemies.length; i++)
         {
-            enemies[i].update();
+
+            enemies[i].update(staticBlock);
         }
     }
 
@@ -115,7 +118,7 @@ public class GameActivity extends PApplet
         rect(0, height - 2 * h5, h5, h5);
         rect(width - h5, height - 2 * h5, h5, h5);
 
-        fill(0,255,0,50);
+        fill(0, 255, 0, 50);
         rect(0, height - h5, h5, h5);
         rect(width - h5, height - h5, h5, h5);
 
@@ -162,7 +165,7 @@ public class GameActivity extends PApplet
 
             for (int i = 0; i<allEnemies.length; i++)
             {
-                float rnd = random (-2,2);
+                float rnd = random (-5,5);
                 enemies[i] = new Enemy(allEnemies[i],rnd);
             }
         }
@@ -178,10 +181,10 @@ public class GameActivity extends PApplet
     /**********************************************************************************************/
 
 
-
     public void mouseDragged()
     {
-        player.move(mouseX-pmouseX,mouseY-pmouseY);
+        player.setSpeed(mouseX-pmouseX,mouseY-pmouseY);
+
 
     }
 
