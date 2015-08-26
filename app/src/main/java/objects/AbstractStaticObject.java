@@ -15,7 +15,6 @@ public abstract class AbstractStaticObject
     float w;
     float h;
 
-
     public AbstractStaticObject(PShape shape)
     {
         this.shape = shape;
@@ -25,7 +24,6 @@ public abstract class AbstractStaticObject
         this.y=params[1];
         this.w=params[2];
         this.h=params[3];
-
     }
 
     public float getX()
@@ -35,17 +33,17 @@ public abstract class AbstractStaticObject
 
     public float getY()
     {
-        return y-h;
+        return y;
     }
 
     public float getX1()
     {
-        return  x+w;
+        return x+w;
     }
 
     public float getY1()
     {
-        return y;
+        return y+h;
     }
 
     public float getCenterX()
