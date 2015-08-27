@@ -13,6 +13,9 @@ public class GameActivity extends PApplet
 {
     PShape level;  //Declaring a new .svg file. Level contains all objects of a level
 
+    float xMax;
+    float yMax;
+
 
     float h5;
 
@@ -29,7 +32,7 @@ public class GameActivity extends PApplet
 
     public void setup() //everything inside will be done just once
     {
-        orientation(LANDSCAPE);
+       // orientation(LANDSCAPE);
 
         size(displayWidth, displayHeight);
         h5=height/5;
@@ -37,6 +40,9 @@ public class GameActivity extends PApplet
         //load resources from assets folder
 
         level=loadShape(filenameLevel);
+        xMax=level.width;
+        yMax=level.height;
+
 
 
         initObjects();
@@ -58,38 +64,30 @@ public class GameActivity extends PApplet
     {
         viewX=width/2-player.getCenterX();
         viewY=height/2-player.getCenterY();
-        /*
-        if (viewX>width/2-player.getCenterX())
-        {
-            viewX--;
-        }
 
-        if (viewY>height/2-player.getCenterY())
-        {
-            viewY--;
-        }
-
-        if (viewX<width/2-player.getCenterX())
-        {
-            viewX++;
-        }
-
-        if (viewY<height/2-player.getCenterY())
-        {
-            viewY++;
-        }
-        */
     }
 
     private void update()
     {
-        player.update(staticBlock);
+        updatePlayer();
+        updateEnemies();
+    }
 
+    private void updatePlayer()
+    {
+        player.update(staticBlock);
+    }
+
+    private void updateEnemies()
+    {
         for (int i=0; i<enemies.length; i++)
         {
+            float xMove = random((float)-0.1,(float)0.1);
+            float yMove = random((float)-0.1,(float)0.1);
 
-            enemies[i].update(staticBlock);
+            enemies[i].update(xMove,yMove);
         }
+
     }
 
     public void display()
@@ -103,13 +101,14 @@ public class GameActivity extends PApplet
     {
         drawStatusBar();
         drawButtons();
+
     }
 
     private void drawStatusBar()
     {
         fill(255, 255, 255);
         textSize(height / 20);
-        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() + "    FrameCount: " + frameCount, 20, 50);
+        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold(), 20, 50);
     }
 
     private void drawButtons()
@@ -165,8 +164,7 @@ public class GameActivity extends PApplet
 
             for (int i = 0; i<allEnemies.length; i++)
             {
-                float rnd = random (-5,5);
-                enemies[i] = new Enemy(allEnemies[i],rnd);
+                enemies[i] = new Enemy(allEnemies[i], xMax, yMax);
             }
         }
     }
@@ -174,7 +172,7 @@ public class GameActivity extends PApplet
     private void initPlayer()
     {
         PShape playerShape=level.findChild("player");
-        player=new Player(playerShape);
+        player=new Player(playerShape, xMax, yMax);
     }
 
 
@@ -184,19 +182,16 @@ public class GameActivity extends PApplet
     public void mouseDragged()
     {
         player.setSpeed(mouseX-pmouseX,mouseY-pmouseY);
-
-
     }
 
 
     public void mousePressed()
     {
-
             if (mouseX < h5 && mouseY > height - h5)
             {
                background(255);
             }
-
     }
+
 }
 

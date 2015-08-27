@@ -1,6 +1,7 @@
 package objects;
 
 import processing.core.PShape;
+import processing.test.akira_neu.GameActivity;
 
 
 /**
@@ -11,17 +12,11 @@ public class Player extends AbstractDynamicObject
     private int health;
     private int gold;
 
-    public Player(PShape shape)
+    public Player(PShape shape, float xMax, float yMax)
     {
-        super(shape);
+        super(shape, xMax, yMax);
         health=100;
         gold=0;
-    }
-
-    public void update(StaticBlock[]staticBlock)
-    {
-        super.update(staticBlock);
-        xSpeed*=0.99;
     }
 
     public int getHealth()
@@ -38,6 +33,35 @@ public class Player extends AbstractDynamicObject
     {
         this.xSpeed=xSpeed;
         this.ySpeed=ySpeed;
+    }
+
+    public void update(StaticBlock[]staticBlock)
+    {
+        for (int i = 0; i < staticBlock.length; i++)
+        {
+            collide(staticBlock[i]);
+        }
+
+        move(xSpeed, ySpeed);
+        ySpeed+=0.1;
+    }
+
+    private void collide(StaticBlock other)
+    {
+        if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
+        {
+            if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()))
+            {
+                xSpeed*=-0.9;
+            }
+
+            if (!(y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
+            {
+                ySpeed*=-0.3;
+
+            }
+            move(xSpeed, ySpeed);
+        }
     }
 
 

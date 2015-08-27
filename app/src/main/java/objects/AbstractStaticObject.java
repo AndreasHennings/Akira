@@ -1,6 +1,8 @@
 package objects;
 
+
 import processing.core.PShape;
+import processing.test.akira_neu.GameActivity;
 
 /**
  * Created by aend on 08.08.15.
@@ -15,6 +17,9 @@ public abstract class AbstractStaticObject
     float w;
     float h;
 
+    float x1;
+    float y1;
+
     public AbstractStaticObject(PShape shape)
     {
         this.shape = shape;
@@ -24,6 +29,9 @@ public abstract class AbstractStaticObject
         this.y=params[1];
         this.w=params[2];
         this.h=params[3];
+
+        x1=x+w;
+        y1=y+h;
     }
 
     public float getX()
@@ -38,12 +46,12 @@ public abstract class AbstractStaticObject
 
     public float getX1()
     {
-        return x+w;
+        return x1;
     }
 
     public float getY1()
     {
-        return y+h;
+        return y1;
     }
 
     public float getCenterX()
