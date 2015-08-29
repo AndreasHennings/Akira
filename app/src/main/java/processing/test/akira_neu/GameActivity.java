@@ -36,6 +36,7 @@ public class GameActivity extends PApplet
         size(displayWidth, displayHeight);
         //creates width und height variables representing physical display size
 
+        smooth();
 
         //load resources from assets folder
 
@@ -202,7 +203,10 @@ public class GameActivity extends PApplet
 
     public void mouseDragged()
     {
-        player.setSpeed(mouseX-pmouseX,mouseY-pmouseY);
+        float xS=mouseX-pmouseX;
+        float yS=mouseY-pmouseY;
+
+        player.setSpeed(xS,yS);
     }
 
 
