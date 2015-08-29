@@ -42,13 +42,13 @@ public class Player extends AbstractDynamicObject
             collideBlock(staticBlock[i]);
         }
 
-        /*
+
         for (int i = 0; i < enemies.length; i++)
         {
             collideEnemy(enemies[i]);
         }
 
-*/
+
         move(xSpeed, ySpeed);
         ySpeed+=0.1;
     }

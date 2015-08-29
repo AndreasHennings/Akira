@@ -14,6 +14,7 @@ public class GameActivity extends PApplet
     PShape level;  //Declaring a new .svg file. Level contains all objects of a level
     PShape playershape;
     PShape blockshape;
+    PShape enemyshape;
 
     float xMax; //Level size
     float yMax;
@@ -43,6 +44,7 @@ public class GameActivity extends PApplet
         level=loadShape(filenameLevel);
         playershape=loadShape("playershape.svg");
         blockshape=loadShape("blockshape.svg");
+        enemyshape=loadShape("qualle.svg");
 
         //initializes level dimension
         xMax=level.width;
@@ -51,9 +53,6 @@ public class GameActivity extends PApplet
 
 
         initObjects();  //see below for details
-
-        viewX=width/2-player.getCenterX();
-        viewY=height/2-player.getCenterY();
 
     }
 
@@ -110,12 +109,22 @@ public class GameActivity extends PApplet
         background(120, 40, 100);
         //scale((float)0.3);
         shapeMode(CORNER);
-        shape(level, viewX, viewY);
+        //shape(level, viewX, viewY);
 
         for (int i=0; i<staticBlock.length; i++)
         {
-            shape (blockshape, staticBlock[i].getX()+viewX, staticBlock[i].getY()+viewY, staticBlock[i].getW(), staticBlock[i].getH());
+            if (!(staticBlock[i].getX1()+viewX<0 || staticBlock[i].getX()+viewX>width || staticBlock[i].getY1()+viewY<0 ||  staticBlock[i].getY()+viewY>height))
+            {
+                shape(blockshape, staticBlock[i].getX() + viewX, staticBlock[i].getY() + viewY, staticBlock[i].getW(), staticBlock[i].getH());
+            }
+        }
 
+        for (int i=0; i<enemies.length; i++)
+        {
+            if (!(enemies[i].getX1()+viewX<0 || enemies[i].getX()+viewX>width || enemies[i].getY1()+viewY<0 ||  enemies[i].getY()+viewY>height))
+            {
+                shape(enemyshape, enemies[i].getX() + viewX, enemies[i].getY() + viewY, enemies[i].getW(), enemies[i].getH());
+            }
         }
 
         shapeMode(CENTER);
