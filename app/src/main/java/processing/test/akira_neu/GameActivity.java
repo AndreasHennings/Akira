@@ -106,7 +106,7 @@ public class GameActivity extends PApplet
 
     public void display()
     {
-        background(120, 40, 100);
+        background(0,0,255);
         //scale((float)0.3);
         shapeMode(CORNER);
         //shape(level, viewX, viewY);
