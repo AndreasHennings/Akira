@@ -44,6 +44,16 @@ public abstract class AbstractStaticObject
         return y;
     }
 
+    public float getW()
+    {
+        return w;
+    }
+
+    public float getH()
+    {
+        return h;
+    }
+
     public float getX1()
     {
         return x1;
@@ -63,5 +73,7 @@ public abstract class AbstractStaticObject
     {
         return y+(h/2);
     }
+
+
 
 }

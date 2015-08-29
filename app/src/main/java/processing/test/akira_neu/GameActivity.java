@@ -12,12 +12,11 @@ import processing.core.PShape;
 public class GameActivity extends PApplet
 {
     PShape level;  //Declaring a new .svg file. Level contains all objects of a level
+    PShape playershape;
+    PShape blockshape;
 
-    float xMax;
+    float xMax; //Level size
     float yMax;
-
-
-    float h5;
 
     StaticBlock[] staticBlock;
     public Enemy[] enemies;
@@ -35,17 +34,22 @@ public class GameActivity extends PApplet
        // orientation(LANDSCAPE);
 
         size(displayWidth, displayHeight);
-        h5=height/5;
+        //creates width und height variables representing physical display size
+
 
         //load resources from assets folder
 
         level=loadShape(filenameLevel);
+        playershape=loadShape("playershape.svg");
+        blockshape=loadShape("blockshape.svg");
+
+        //initializes level dimension
         xMax=level.width;
         yMax=level.height;
 
 
 
-        initObjects();
+        initObjects();  //see below for details
 
         viewX=width/2-player.getCenterX();
         viewY=height/2-player.getCenterY();
@@ -75,7 +79,7 @@ public class GameActivity extends PApplet
 
     private void updatePlayer()
     {
-        player.update(staticBlock);
+        player.update(staticBlock, enemies);
     }
 
     private void updateEnemies()
@@ -85,6 +89,16 @@ public class GameActivity extends PApplet
             float xMove = random((float)-0.1,(float)0.1);
             float yMove = random((float)-0.1,(float)0.1);
 
+            if (enemies[i].getX1()<0||enemies[i].getX()>xMax)
+            {
+                enemies[i].setX(random(2100,3200));
+            }
+
+            if (enemies[i].getY1()<0||enemies[i].getY()>yMax)
+            {
+                enemies[i].setY(random(1600,3000));
+            }
+
             enemies[i].update(xMove,yMove);
         }
 
@@ -93,14 +107,30 @@ public class GameActivity extends PApplet
     public void display()
     {
         background(120, 40, 100);
+        //scale((float)0.3);
+        shapeMode(CORNER);
         shape(level, viewX, viewY);
+
+        for (int i=0; i<staticBlock.length; i++)
+        {
+            shape (blockshape, staticBlock[i].getX()+viewX, staticBlock[i].getY()+viewY, staticBlock[i].getW(), staticBlock[i].getH());
+
+        }
+
+        shapeMode(CENTER);
+        shape(playershape,width/2,height/2);
+
+
+
+
+
+
         drawGui();
     }
 
     private void drawGui()
     {
         drawStatusBar();
-        drawButtons();
 
     }
 
@@ -108,22 +138,10 @@ public class GameActivity extends PApplet
     {
         fill(255, 255, 255);
         textSize(height / 20);
-        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold(), 20, 50);
+        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() +"  "+ frameRate, 20, 50);
     }
 
-    private void drawButtons()
-    {
-        fill(0,0,255,50);
-        rect(0, height - 2 * h5, h5, h5);
-        rect(width - h5, height - 2 * h5, h5, h5);
 
-        fill(0, 255, 0, 50);
-        rect(0, height - h5, h5, h5);
-        rect(width - h5, height - h5, h5, h5);
-
-
-
-    }
 
 
     /**********************************************************************************************/
@@ -134,17 +152,18 @@ public class GameActivity extends PApplet
         initBlocks();
         initEnemies();
         initPlayer();
-       // initButtons();
+
     }
 
     private void initBlocks()
     {
-        PShape blocksShape = level.findChild("blocks");
+        PShape blocksShape = level.findChild("blocks");  //find PShape blocks, a group a single blocks
 
-        if (blocksShape != null && blocksShape.getChildCount()>0)
+        if (blocksShape != null && blocksShape.getChildCount()>0)  //if you find one, and it has more than 0 children
         {
-            staticBlock = new StaticBlock[blocksShape.getChildCount()];
-            PShape[]allBlocks=blocksShape.getChildren();
+            staticBlock = new StaticBlock[blocksShape.getChildCount()];  //init array with number of children
+
+            PShape[]allBlocks=blocksShape.getChildren();  //PShape array of single Blocks
 
             for (int i= 0; i<allBlocks.length; i++)
             {
@@ -173,6 +192,8 @@ public class GameActivity extends PApplet
     {
         PShape playerShape=level.findChild("player");
         player=new Player(playerShape, xMax, yMax);
+        playerShape.setVisible(false);
+
     }
 
 
@@ -185,13 +206,7 @@ public class GameActivity extends PApplet
     }
 
 
-    public void mousePressed()
-    {
-            if (mouseX < h5 && mouseY > height - h5)
-            {
-               background(255);
-            }
-    }
+
 
 }
 

@@ -35,32 +35,48 @@ public class Player extends AbstractDynamicObject
         this.ySpeed=ySpeed;
     }
 
-    public void update(StaticBlock[]staticBlock)
+    public void update(StaticBlock[]staticBlock, Enemy[] enemies)
     {
         for (int i = 0; i < staticBlock.length; i++)
         {
-            collide(staticBlock[i]);
+            collideBlock(staticBlock[i]);
         }
 
+        /*
+        for (int i = 0; i < enemies.length; i++)
+        {
+            collideEnemy(enemies[i]);
+        }
+
+*/
         move(xSpeed, ySpeed);
         ySpeed+=0.1;
     }
 
-    private void collide(StaticBlock other)
+    private void collideBlock(StaticBlock other)
     {
         if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
         {
             if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()))
             {
-                xSpeed*=-0.9;
+                xSpeed=0;
             }
 
             if (!(y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
             {
-                ySpeed*=-0.3;
+                ySpeed=0;
 
             }
             move(xSpeed, ySpeed);
+        }
+    }
+
+    private void collideEnemy(Enemy other)
+    {
+        if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
+        {
+            health--;
+
         }
     }
 

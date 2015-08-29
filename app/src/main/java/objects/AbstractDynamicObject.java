@@ -12,6 +12,8 @@ public abstract class AbstractDynamicObject extends AbstractStaticObject
     float xSpeed;
     float ySpeed;
 
+    // size of level:
+
     float xMax;
     float yMax;
 
@@ -37,29 +39,7 @@ public abstract class AbstractDynamicObject extends AbstractStaticObject
 
     void move(float xSpeed, float ySpeed)
     {
-        if (x<0)
-        {
-            setX(10);
-            xSpeed=10;
-        }
 
-        if (x+w>xMax)
-        {
-            setX(xMax-10);
-            xSpeed=-10;
-        }
-
-        if (y<0)
-        {
-            setY(10);
-            ySpeed=10;
-        }
-
-        if (y+h>yMax)
-        {
-            setY(yMax-10);
-            ySpeed=-10;
-        }
 
         setX(x+xSpeed);
         setY(y+ySpeed);
