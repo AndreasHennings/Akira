@@ -41,6 +41,12 @@ public class Player extends AbstractDynamicObject
         return gold;
     }
 
+    /*
+    public float getXSpeed() { return xSpeed;}
+    public float getYSpeed() { return ySpeed;}
+
+    */
+
     public void setSpeed(float xSpeed, float ySpeed)
     {
         this.xSpeed=xSpeed;
@@ -62,6 +68,7 @@ public class Player extends AbstractDynamicObject
 
 
         move(xSpeed, ySpeed);
+
         ySpeed+=0.1;
     }
 

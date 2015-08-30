@@ -220,14 +220,22 @@ public class GameActivity extends PApplet
 
     public void mouseDragged()
     {
-        float xS=mouseX-pmouseX;
-        if (xS<0) {player.facing=-1;}
-        if (xS>0) {player.facing=1;}
+
+            float xS = mouseX - pmouseX;
+            if (xS < 0)
+            {
+                player.facing = -1;
+            }
+            if (xS > 0)
+            {
+                player.facing = 1;
+            }
 
 
-        float yS=mouseY-pmouseY;
+            float yS = mouseY - pmouseY;
 
-        player.setSpeed(xS,yS);
+            player.setSpeed(xS, yS);
+
     }
 
 
