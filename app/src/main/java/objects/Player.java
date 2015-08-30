@@ -9,7 +9,8 @@ import processing.test.akira_neu.GameActivity;
  */
 public class Player extends AbstractDynamicObject
 {
-    private int health;
+    public int facing;
+    public int health;
     private int gold;
 
     public Player(PShape shape, float xMax, float yMax)
@@ -17,6 +18,17 @@ public class Player extends AbstractDynamicObject
         super(shape, xMax, yMax);
         health=100;
         gold=0;
+        facing=1;
+    }
+
+    public float getCenterX()
+    {
+        return x+(w/2);
+    }
+
+    public float getCenterY()
+    {
+        return y+(h/2);
     }
 
     public int getHealth()
@@ -73,11 +85,12 @@ public class Player extends AbstractDynamicObject
 
     private void collideEnemy(Enemy other)
     {
+        /*
         if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
         {
             health--;
-
         }
+        */
     }
 
 

@@ -23,5 +23,4 @@ public class Enemy extends AbstractDynamicObject
         move(xSpeed, ySpeed);
     }
 
-
 }

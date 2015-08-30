@@ -24,9 +24,8 @@ public class GameActivity extends PApplet
     public Player player;
 
     String filenameLevel = "testlevel.svg";
-    //view parameters
 
-    float scaleFactor;  //scale of view
+    //view parameters
     float viewX;  // parameters needed for scrolling view. Determine the position of the
     float viewY;  // upper left corner of the level
 
@@ -56,6 +55,8 @@ public class GameActivity extends PApplet
 
     }
 
+    /**********************************************************************************************/
+
     //This method is the game loop.Will be repeated during gameplay
     public void draw()
     {
@@ -68,8 +69,9 @@ public class GameActivity extends PApplet
     {
         viewX=width/2-player.getCenterX();
         viewY=height/2-player.getCenterY();
-
     }
+
+    /**********************************************************************************************/
 
     private void update()
     {
@@ -104,13 +106,21 @@ public class GameActivity extends PApplet
 
     }
 
+    /**********************************************************************************************/
+
     public void display()
     {
         background(0,0,255);
-        //scale((float)0.3);
-        shapeMode(CORNER);
-        //shape(level, viewX, viewY);
 
+        drawBlocks();
+        drawEnemies();
+        drawPlayer();
+        drawGui();
+    }
+
+    private void drawBlocks()
+    {
+        shapeMode(CORNER);
         for (int i=0; i<staticBlock.length; i++)
         {
             if (!(staticBlock[i].getX1()+viewX<0 || staticBlock[i].getX()+viewX>width || staticBlock[i].getY1()+viewY<0 ||  staticBlock[i].getY()+viewY>height))
@@ -118,40 +128,40 @@ public class GameActivity extends PApplet
                 shape(blockshape, staticBlock[i].getX() + viewX, staticBlock[i].getY() + viewY, staticBlock[i].getW(), staticBlock[i].getH());
             }
         }
+    }
 
+    private void drawEnemies()
+    {
+        shapeMode(CORNER);
         for (int i=0; i<enemies.length; i++)
         {
             if (!(enemies[i].getX1()+viewX<0 || enemies[i].getX()+viewX>width || enemies[i].getY1()+viewY<0 ||  enemies[i].getY()+viewY>height))
             {
                 shape(enemyshape, enemies[i].getX() + viewX, enemies[i].getY() + viewY, enemies[i].getW(), enemies[i].getH());
+
+
+                if (!(player.getX()>enemies[i].getX1() || player.getX1() < enemies[i].getX() || player.getY() >enemies[i].getY1() || player.getY1() < enemies[i].getY()))
+                {
+                    player.health--;
+                }
+
             }
         }
+    }
 
+    private void drawPlayer()
+    {
         shapeMode(CENTER);
-        shape(playershape,width/2,height/2);
-
-
-
-
-
-
-        drawGui();
+        shape(playershape,player.getCenterX()+viewX, player.getCenterY()+viewY, player.facing*player.getW(), player.getH());
     }
 
     private void drawGui()
     {
-        drawStatusBar();
-
-    }
-
-    private void drawStatusBar()
-    {
         fill(255, 255, 255);
-        textSize(height / 20);
-        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() +"  "+ frameRate, 20, 50);
+        textSize(height / 30);
+        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() +"  "+ frameRate, width/20, height/20);
+
     }
-
-
 
 
     /**********************************************************************************************/
@@ -202,8 +212,6 @@ public class GameActivity extends PApplet
     {
         PShape playerShape=level.findChild("player");
         player=new Player(playerShape, xMax, yMax);
-        playerShape.setVisible(false);
-
     }
 
 
@@ -213,6 +221,10 @@ public class GameActivity extends PApplet
     public void mouseDragged()
     {
         float xS=mouseX-pmouseX;
+        if (xS<0) {player.facing=-1;}
+        if (xS>0) {player.facing=1;}
+
+
         float yS=mouseY-pmouseY;
 
         player.setSpeed(xS,yS);

@@ -64,15 +64,7 @@ public abstract class AbstractStaticObject
         return y1;
     }
 
-    public float getCenterX()
-    {
-        return x+(w/2);
-    }
 
-    public float getCenterY()
-    {
-        return y+(h/2);
-    }
 
 
 
