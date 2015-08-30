@@ -23,7 +23,7 @@ public class GameActivity extends PApplet
     public Enemy[] enemies;
     public Player player;
 
-    String filenameLevel = "testlevel.svg";
+    String filenameLevel = "testlevel2.svg";
 
     //view parameters
     float viewX;  // parameters needed for scrolling view. Determine the position of the
@@ -160,6 +160,7 @@ public class GameActivity extends PApplet
         fill(255, 255, 255);
         textSize(height / 30);
         text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() +"  "+ frameRate, width/20, height/20);
+        shape(level, width-width/5, height-height/5, width/5, height/5);
 
     }
 

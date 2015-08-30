@@ -69,6 +69,7 @@ public class Player extends AbstractDynamicObject
 
         move(xSpeed, ySpeed);
 
+        xSpeed*=0.99;
         ySpeed+=0.1;
     }
 
@@ -84,10 +85,10 @@ public class Player extends AbstractDynamicObject
             if (!(y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
             {
                 ySpeed=0;
-
             }
-            move(xSpeed, ySpeed);
         }
+
+
     }
 
     private void collideEnemy(Enemy other)
