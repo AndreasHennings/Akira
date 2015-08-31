@@ -13,9 +13,9 @@ public class Player extends AbstractDynamicObject
     public int health;
     private int gold;
 
-    public Player(PShape shape, float xMax, float yMax)
+    public Player(PShape shape)
     {
-        super(shape, xMax, yMax);
+        super(shape);
         health=100;
         gold=0;
         facing=1;
@@ -47,34 +47,24 @@ public class Player extends AbstractDynamicObject
 
     */
 
-    public void setSpeed(float xSpeed, float ySpeed)
+
+
+    public void update(Enemy[] enemies)
     {
-        this.xSpeed=xSpeed;
-        this.ySpeed=ySpeed;
-    }
-
-    public void update(StaticBlock[]staticBlock, Enemy[] enemies)
-    {
-        for (int i = 0; i < staticBlock.length; i++)
-        {
-            collideBlock(staticBlock[i]);
-        }
-
-
         for (int i = 0; i < enemies.length; i++)
         {
             collideEnemy(enemies[i]);
         }
 
+        xSpeed*=0.95;
+        ySpeed+=0.1;
 
         move(xSpeed, ySpeed);
-
-        xSpeed*=0.99;
-        ySpeed+=0.1;
     }
 
-    private void collideBlock(StaticBlock other)
+    public void collideBlock(AbstractStaticObject other)
     {
+        if (other.name=='e') {health--;}
         if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
         {
             if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()))
@@ -91,14 +81,23 @@ public class Player extends AbstractDynamicObject
 
     }
 
-    private void collideEnemy(Enemy other)
+    public void collideEnemy(Enemy other)
     {
-        /*
         if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
         {
             health--;
+            if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()))
+            {
+                xSpeed=0;
+            }
+
+            if (!(y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
+            {
+                ySpeed=0;
+            }
         }
-        */
+
+
     }
 
 

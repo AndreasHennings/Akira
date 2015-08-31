@@ -11,5 +11,6 @@ public class StaticBlock extends AbstractStaticObject
     public StaticBlock(PShape shape)
     {
         super(shape);
+        name='b';
     }
 }

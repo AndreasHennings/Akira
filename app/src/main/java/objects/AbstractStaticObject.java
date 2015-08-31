@@ -10,6 +10,7 @@ import processing.test.akira_neu.GameActivity;
 public abstract class AbstractStaticObject
 {
     PShape shape;
+    char name;
 
     //position and dimension
     float x;
@@ -23,6 +24,7 @@ public abstract class AbstractStaticObject
     public AbstractStaticObject(PShape shape)
     {
         this.shape = shape;
+        name='0';
 
         float[] params = shape.getParams();
         this.x=params[0];

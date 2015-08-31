@@ -1,7 +1,7 @@
 package objects;
 
 import processing.core.PShape;
-import processing.test.akira_neu.GameActivity;
+
 
 /**
  * Created by judith on 11.08.15.
@@ -9,9 +9,10 @@ import processing.test.akira_neu.GameActivity;
 public class Enemy extends AbstractDynamicObject
 {
 
-    public Enemy(PShape shape, float xMax, float yMax)
+    public Enemy(PShape shape)
     {
-        super(shape, xMax, yMax);
+        super(shape);
+        name='e';
         xSpeed = 0;
         ySpeed = 0;
     }

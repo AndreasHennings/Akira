@@ -12,16 +12,18 @@ public abstract class AbstractDynamicObject extends AbstractStaticObject
     float xSpeed;
     float ySpeed;
 
-    // size of level:
 
-    float xMax;
-    float yMax;
-
-    public AbstractDynamicObject(PShape shape, float xMax, float yMax)
+    public AbstractDynamicObject(PShape shape)
     {
         super(shape);
-        this.xMax=xMax;
-        this.yMax=yMax;
+        xSpeed=0;
+        ySpeed=0;
+    }
+
+    public void setSpeed(float xSpeed, float ySpeed)
+    {
+        this.xSpeed=xSpeed;
+        this.ySpeed=ySpeed;
     }
 
     public void setX(float newX)

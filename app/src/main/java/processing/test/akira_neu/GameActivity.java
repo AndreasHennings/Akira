@@ -16,8 +16,6 @@ public class GameActivity extends PApplet
     PShape blockshape;
     PShape enemyshape;
 
-    float xMax; //Level size
-    float yMax;
 
     StaticBlock[] staticBlock;
     public Enemy[] enemies;
@@ -44,10 +42,6 @@ public class GameActivity extends PApplet
         playershape=loadShape("playershape.svg");
         blockshape=loadShape("blockshape.svg");
         enemyshape=loadShape("qualle.svg");
-
-        //initializes level dimension
-        xMax=level.width;
-        yMax=level.height;
 
 
 
@@ -88,20 +82,10 @@ public class GameActivity extends PApplet
     {
         for (int i=0; i<enemies.length; i++)
         {
-            float xMove = random((float)-0.1,(float)0.1);
-            float yMove = random((float)-0.1,(float)0.1);
+            float xMove = random((float)-1.0,(float)1.0);
+            float yMove = random((float)-1.0,(float)1.0);
 
-            if (enemies[i].getX1()<0||enemies[i].getX()>xMax)
-            {
-                enemies[i].setX(random(2100,3200));
-            }
-
-            if (enemies[i].getY1()<0||enemies[i].getY()>yMax)
-            {
-                enemies[i].setY(random(1600,3000));
-            }
-
-            enemies[i].update(xMove,yMove);
+            enemies[i].setSpeed(xMove, yMove);
         }
 
     }
@@ -126,6 +110,7 @@ public class GameActivity extends PApplet
             if (!(staticBlock[i].getX1()+viewX<0 || staticBlock[i].getX()+viewX>width || staticBlock[i].getY1()+viewY<0 ||  staticBlock[i].getY()+viewY>height))
             {
                 shape(blockshape, staticBlock[i].getX() + viewX, staticBlock[i].getY() + viewY, staticBlock[i].getW(), staticBlock[i].getH());
+                player.collideBlock(staticBlock[i]);
             }
         }
     }
@@ -138,13 +123,7 @@ public class GameActivity extends PApplet
             if (!(enemies[i].getX1()+viewX<0 || enemies[i].getX()+viewX>width || enemies[i].getY1()+viewY<0 ||  enemies[i].getY()+viewY>height))
             {
                 shape(enemyshape, enemies[i].getX() + viewX, enemies[i].getY() + viewY, enemies[i].getW(), enemies[i].getH());
-
-
-                if (!(player.getX()>enemies[i].getX1() || player.getX1() < enemies[i].getX() || player.getY() >enemies[i].getY1() || player.getY1() < enemies[i].getY()))
-                {
-                    player.health--;
-                }
-
+                player.collideEnemy(enemies[i]);
             }
         }
     }
@@ -160,6 +139,7 @@ public class GameActivity extends PApplet
         fill(255, 255, 255);
         textSize(height / 30);
         text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() +"  "+ frameRate, width/20, height/20);
+        
         shape(level, width-width/5, height-height/5, width/5, height/5);
 
     }
@@ -204,7 +184,7 @@ public class GameActivity extends PApplet
 
             for (int i = 0; i<allEnemies.length; i++)
             {
-                enemies[i] = new Enemy(allEnemies[i], xMax, yMax);
+                enemies[i] = new Enemy(allEnemies[i]);
             }
         }
     }
@@ -212,7 +192,7 @@ public class GameActivity extends PApplet
     private void initPlayer()
     {
         PShape playerShape=level.findChild("player");
-        player=new Player(playerShape, xMax, yMax);
+        player=new Player(playerShape);
     }
 
 
