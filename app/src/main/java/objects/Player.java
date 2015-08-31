@@ -1,7 +1,7 @@
 package objects;
 
 import processing.core.PShape;
-import processing.test.akira_neu.GameActivity;
+
 
 
 /**
@@ -41,18 +41,13 @@ public class Player extends AbstractDynamicObject
         return gold;
     }
 
-    public void update(Enemy[] enemies)
+    public void update()
     {
-        for (int i = 0; i < enemies.length; i++)
-        {
-            collideEnemy(enemies[i]);
-        }
-
-        xSpeed*=0.95;
+        super.update();
         ySpeed+=0.1;
-
-        move(xSpeed, ySpeed);
     }
+
+
 
     public void collideBlock(AbstractStaticObject other)
     {
@@ -64,11 +59,14 @@ public class Player extends AbstractDynamicObject
                 xSpeed=0;
             }
 
-            if (!(y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
+            if (!(y+ySpeed>other.getY1())||y+h+ySpeed<other.getY())
             {
                 ySpeed=0;
             }
+
+
         }
+
     }
 
     public void collideEnemy(Enemy other)

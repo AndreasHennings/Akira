@@ -75,17 +75,18 @@ public class GameActivity extends PApplet
 
     private void updatePlayer()
     {
-        player.update(enemies);
+        player.update();
     }
 
     private void updateEnemies()
     {
         for (int i=0; i<enemies.length; i++)
         {
-            float xMove = random((float)-1.0,(float)1.0);
-            float yMove = random((float)-1.0,(float)1.0);
+            float xMove = random((float)-10.0,(float)10.0);
+            float yMove = random((float)-10.0,(float)10.0);
 
             enemies[i].setSpeed(xMove, yMove);
+            enemies[i].update();
         }
 
     }

@@ -26,23 +26,10 @@ public abstract class AbstractDynamicObject extends AbstractStaticObject
         this.ySpeed=ySpeed;
     }
 
-    public void setX(float newX)
+    public void update()
     {
-        shape.translate(newX-x,0);
-        x= newX;
-    }
-
-    public void setY(float newY)
-    {
-        shape.translate(0,newY-y);
-        y= newY;
-    }
-
-
-    void move(float xSpeed, float ySpeed)
-    {
-        setX(x+xSpeed);
-        setY(y+ySpeed);
+        x+=xSpeed;
+        y+=ySpeed;
     }
 
 }

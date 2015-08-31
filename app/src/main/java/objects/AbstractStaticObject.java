@@ -58,12 +58,12 @@ public abstract class AbstractStaticObject
 
     public float getX1()
     {
-        return x1;
+        return x+w;
     }
 
     public float getY1()
     {
-        return y1;
+        return y+h;
     }
 
 
