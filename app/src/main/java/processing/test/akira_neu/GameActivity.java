@@ -75,7 +75,7 @@ public class GameActivity extends PApplet
 
     private void updatePlayer()
     {
-        player.update(staticBlock, enemies);
+        player.update(enemies);
     }
 
     private void updateEnemies()

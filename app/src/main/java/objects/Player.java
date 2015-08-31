@@ -41,14 +41,6 @@ public class Player extends AbstractDynamicObject
         return gold;
     }
 
-    /*
-    public float getXSpeed() { return xSpeed;}
-    public float getYSpeed() { return ySpeed;}
-
-    */
-
-
-
     public void update(Enemy[] enemies)
     {
         for (int i = 0; i < enemies.length; i++)
@@ -77,8 +69,6 @@ public class Player extends AbstractDynamicObject
                 ySpeed=0;
             }
         }
-
-
     }
 
     public void collideEnemy(Enemy other)
