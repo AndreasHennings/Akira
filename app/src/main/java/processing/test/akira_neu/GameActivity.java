@@ -2,6 +2,8 @@ package processing.test.akira_neu;
 
 
 
+import java.util.ArrayList;
+
 import objects.Enemy;
 import objects.Player;
 import objects.StaticBlock;
@@ -20,6 +22,9 @@ public class GameActivity extends PApplet
     StaticBlock[] staticBlock;
     public Enemy[] enemies;
     public Player player;
+
+    ArrayList<StaticBlock> visibleBlocks;
+    ArrayList<Enemy> visibleEnemies;
 
     String filenameLevel = "testlevel2.svg";
 
@@ -54,6 +59,8 @@ public class GameActivity extends PApplet
     //This method is the game loop.Will be repeated during gameplay
     public void draw()
     {
+        visibleBlocks=getVisibleBlocks();
+        visibleEnemies=getVisibleEnemies();
         scroll();
         update();
         display();
@@ -80,19 +87,14 @@ public class GameActivity extends PApplet
 
     private void updateEnemies()
     {
-        for (int i=0; i<enemies.length; i++)
+        for (int i=0; i<visibleEnemies.size(); i++)
         {
-            float xMove=0;
-            float yMove=0;
+            Enemy en = visibleEnemies.get(i);
+            float xMove = random((float)-20.0,(float)20.0);
+            float yMove = random((float)-20.0,(float)20.0);
 
-            if (player.getCenterX()-enemies[i].getCenterX()!=0 && player.getCenterY()-enemies[i].getCenterY()!=0)
-            {
-                xMove = 100/(player.getCenterX() - enemies[i].getCenterX());
-
-                yMove = 100/(player.getCenterY() - enemies[i].getCenterY());
-            }
-            enemies[i].setSpeed(xMove, yMove);
-            enemies[i].update();
+            en.setSpeed(xMove, yMove);
+            en.update();
         }
 
     }
@@ -112,26 +114,26 @@ public class GameActivity extends PApplet
     private void drawBlocks()
     {
         shapeMode(CORNER);
-        for (int i=0; i<staticBlock.length; i++)
+        for (int i=0; i<visibleBlocks.size(); i++)
         {
-            if (!(staticBlock[i].getX1()+viewX<0 || staticBlock[i].getX()+viewX>width || staticBlock[i].getY1()+viewY<0 ||  staticBlock[i].getY()+viewY>height))
-            {
-                shape(blockshape, staticBlock[i].getX() + viewX, staticBlock[i].getY() + viewY, staticBlock[i].getW(), staticBlock[i].getH());
-                player.collideBlock(staticBlock[i]);
-            }
+
+            StaticBlock sb = visibleBlocks.get(i);
+            shape(blockshape, sb.getX() + viewX, sb.getY() + viewY, sb.getW(), sb.getH());
+            player.collideBlock(sb);
+
+
+
         }
     }
 
     private void drawEnemies()
     {
         shapeMode(CORNER);
-        for (int i=0; i<enemies.length; i++)
+        for (int i=0; i<visibleEnemies.size(); i++)
         {
-            if (!(enemies[i].getX1()+viewX<0 || enemies[i].getX()+viewX>width || enemies[i].getY1()+viewY<0 ||  enemies[i].getY()+viewY>height))
-            {
-                shape(enemyshape, enemies[i].getX() + viewX, enemies[i].getY() + viewY, enemies[i].getW(), enemies[i].getH());
-                player.collideEnemy(enemies[i]);
-            }
+                Enemy en = visibleEnemies.get(i);
+                shape(enemyshape, en.getX() + viewX, en.getY() + viewY, en.getW(), en.getH());
+                player.collideEnemy(en);
         }
     }
 
@@ -224,6 +226,36 @@ public class GameActivity extends PApplet
 
             player.setSpeed(xS, yS);
 
+    }
+
+    ArrayList<StaticBlock> getVisibleBlocks()
+    {
+        ArrayList<StaticBlock> result = new ArrayList<StaticBlock>();
+
+        for (int i=0; i<staticBlock.length; i++)
+        {
+            if (!(staticBlock[i].getX1() + viewX < 0 || staticBlock[i].getX() + viewX > width || staticBlock[i].getY1() + viewY < 0 || staticBlock[i].getY() + viewY > height))
+            {
+                result.add(staticBlock[i]);
+            }
+        }
+
+        return result;
+    }
+
+    ArrayList<Enemy> getVisibleEnemies()
+    {
+        ArrayList<Enemy> result = new ArrayList<Enemy>();
+
+        for (int i=0; i<enemies.length; i++)
+        {
+            if (!(enemies[i].getX1() + viewX < 0 || enemies[i].getX() + viewX > width || enemies[i].getY1() + viewY < 0 || enemies[i].getY() + viewY > height))
+            {
+                result.add(enemies[i]);
+            }
+        }
+
+        return result;
     }
 
 

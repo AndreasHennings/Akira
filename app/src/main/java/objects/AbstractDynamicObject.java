@@ -12,16 +12,6 @@ public abstract class AbstractDynamicObject extends AbstractStaticObject
     float xSpeed;
     float ySpeed;
 
-    public float getCenterX()
-    {
-        return x+(w/2);
-    }
-
-    public float getCenterY()
-    {
-        return y+(h/2);
-    }
-
 
     public AbstractDynamicObject(PShape shape)
     {
@@ -32,15 +22,16 @@ public abstract class AbstractDynamicObject extends AbstractStaticObject
 
     public void setSpeed(float xSpeed, float ySpeed)
     {
-        this.xSpeed+=xSpeed;
-        this.ySpeed+=ySpeed;
+        this.xSpeed=xSpeed;
+        this.ySpeed=ySpeed;
     }
 
     public void update()
     {
         x+=xSpeed;
         y+=ySpeed;
-        shape.translate(xSpeed,ySpeed);
+        shape.translate(xSpeed, ySpeed);
+
     }
 
 }
