@@ -82,9 +82,15 @@ public class GameActivity extends PApplet
     {
         for (int i=0; i<enemies.length; i++)
         {
-            float xMove = random((float)-10.0,(float)10.0);
-            float yMove = random((float)-10.0,(float)10.0);
+            float xMove=0;
+            float yMove=0;
 
+            if (player.getCenterX()-enemies[i].getCenterX()!=0 && player.getCenterY()-enemies[i].getCenterY()!=0)
+            {
+                xMove = 100/(player.getCenterX() - enemies[i].getCenterX());
+
+                yMove = 100/(player.getCenterY() - enemies[i].getCenterY());
+            }
             enemies[i].setSpeed(xMove, yMove);
             enemies[i].update();
         }
