@@ -12,7 +12,6 @@ public class Enemy extends AbstractDynamicObject
     public Enemy(PShape shape)
     {
         super(shape);
-        type='e';
     }
 
 }

@@ -21,6 +21,15 @@ public class Player extends AbstractDynamicObject
         facing=1;
     }
 
+    public float getCenterX()
+    {
+        return x+(w/2);
+    }
+
+    public float getCenterY()
+    {
+        return y+(h/2);
+    }
 
     public int getHealth()
     {
@@ -35,17 +44,16 @@ public class Player extends AbstractDynamicObject
     public void update()
     {
         super.update();
-        ySpeed+=0.1;
+        xSpeed*=0.95;
+        ySpeed*=0.95;
+        ySpeed+=0.5;
     }
 
 
 
     public void collideBlock(AbstractStaticObject other)
     {
-        if (other.type =='e')
-        {
-            health--;
-        }
+        if (other.name=='e') {health--;}
         if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
         {
             if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()))
