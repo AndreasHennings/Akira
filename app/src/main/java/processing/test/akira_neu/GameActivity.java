@@ -76,7 +76,7 @@ public class GameActivity extends PApplet
 
     private void update()
     {
-        updatePlayer();
+        //updatePlayer();
         updateEnemies();
     }
 
@@ -114,16 +114,15 @@ public class GameActivity extends PApplet
     private void drawBlocks()
     {
         shapeMode(CORNER);
+        player.ySpeed+=0.5;
         for (int i=0; i<visibleBlocks.size(); i++)
         {
-
             StaticBlock sb = visibleBlocks.get(i);
             shape(blockshape, sb.getX() + viewX, sb.getY() + viewY, sb.getW(), sb.getH());
             player.collideBlock(sb);
-
-
-
         }
+
+        player.update();
     }
 
     private void drawEnemies()
@@ -135,6 +134,7 @@ public class GameActivity extends PApplet
                 shape(enemyshape, en.getX() + viewX, en.getY() + viewY, en.getW(), en.getH());
                 player.collideEnemy(en);
         }
+        player.update();
     }
 
     private void drawPlayer()

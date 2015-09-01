@@ -46,7 +46,6 @@ public class Player extends AbstractDynamicObject
         super.update();
         xSpeed*=0.95;
         ySpeed*=0.95;
-        ySpeed+=0.5;
     }
 
 
@@ -65,10 +64,7 @@ public class Player extends AbstractDynamicObject
             {
                 ySpeed=0;
             }
-
-
         }
-
     }
 
     public void collideEnemy(Enemy other)
@@ -86,10 +82,5 @@ public class Player extends AbstractDynamicObject
                 ySpeed=0;
             }
         }
-
-
     }
-
-
-
 }

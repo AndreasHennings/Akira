@@ -10,7 +10,7 @@ import processing.test.akira_neu.GameActivity;
 public abstract class AbstractDynamicObject extends AbstractStaticObject
 {
     float xSpeed;
-    float ySpeed;
+    public float ySpeed;
 
 
     public AbstractDynamicObject(PShape shape)
