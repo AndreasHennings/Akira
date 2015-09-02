@@ -5,12 +5,12 @@ import processing.core.PShape;
 /**
  * Created by judith on 11.08.2015.
  */
-public class StaticBlock extends AbstractStaticObject
+public class StaticBlock extends AbstractObject
 {
 
-    public StaticBlock(PShape shape)
+    public StaticBlock(PShape shape, PShape img)
     {
-        super(shape);
-        name='b';
+        super(shape, img);
+        type='b';
     }
 }

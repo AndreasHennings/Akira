@@ -4,6 +4,7 @@ package processing.test.akira_neu;
 
 import java.util.ArrayList;
 
+import objects.AbstractObject;
 import objects.Enemy;
 import objects.Player;
 import objects.StaticBlock;
@@ -23,8 +24,9 @@ public class GameActivity extends PApplet
     public Enemy[] enemies;
     public Player player;
 
-    ArrayList<StaticBlock> visibleBlocks;
-    ArrayList<Enemy> visibleEnemies;
+
+
+    ArrayList<AbstractObject> visibleObjects;
 
     String filenameLevel = "testlevel2.svg";
 
@@ -59,8 +61,8 @@ public class GameActivity extends PApplet
     //This method is the game loop.Will be repeated during gameplay
     public void draw()
     {
-        visibleBlocks=getVisibleBlocks();
-        visibleEnemies=getVisibleEnemies();
+        visibleObjects=getVisibleObjects();
+
         scroll();
         update();
         display();
@@ -76,80 +78,68 @@ public class GameActivity extends PApplet
 
     private void update()
     {
-        //updatePlayer();
+        updatePlayer();
         updateEnemies();
     }
 
     private void updatePlayer()
     {
-        player.update();
+        player.update(visibleObjects);
     }
 
     private void updateEnemies()
     {
-        for (int i=0; i<visibleEnemies.size(); i++)
+        for (int i=0; i<visibleObjects.size();i++)
         {
-            Enemy en = visibleEnemies.get(i);
-            float xMove = random((float)-20.0,(float)20.0);
-            float yMove = random((float)-20.0,(float)20.0);
-
-            en.setSpeed(xMove, yMove);
-            en.update();
+            AbstractObject ao = visibleObjects.get(i);
+            if (ao.getType()=='e')
+            {
+                ao.setXSpeed((player.getCenterX()-ao.getCenterX())*(float)0.03);
+                ao.setYSpeed((player.getCenterY()-ao.getCenterY())*(float)0.03);
+                ao.update();
+            }
         }
-
     }
+
+
 
     /**********************************************************************************************/
 
     public void display()
     {
-        background(0,0,255);
+        background(0, 0, 255);
 
-        drawBlocks();
-        drawEnemies();
+        drawObjects();
+
         drawPlayer();
         drawGui();
     }
 
-    private void drawBlocks()
+    private void drawObjects()
     {
         shapeMode(CORNER);
-        player.ySpeed+=0.5;
-        for (int i=0; i<visibleBlocks.size(); i++)
+        for (int i=0; i<visibleObjects.size(); i++)
         {
-            StaticBlock sb = visibleBlocks.get(i);
-            shape(blockshape, sb.getX() + viewX, sb.getY() + viewY, sb.getW(), sb.getH());
-            player.collideBlock(sb);
+            AbstractObject sb = visibleObjects.get(i);
+            shape(sb.getImg(), sb.getX() + viewX, sb.getY() + viewY, sb.getW(), sb.getH());
         }
-
-        player.update();
     }
 
-    private void drawEnemies()
-    {
-        shapeMode(CORNER);
-        for (int i=0; i<visibleEnemies.size(); i++)
-        {
-                Enemy en = visibleEnemies.get(i);
-                shape(enemyshape, en.getX() + viewX, en.getY() + viewY, en.getW(), en.getH());
-                player.collideEnemy(en);
-        }
-        player.update();
-    }
+
 
     private void drawPlayer()
     {
         shapeMode(CENTER);
-        shape(playershape,player.getCenterX()+viewX, player.getCenterY()+viewY, player.facing*player.getW(), player.getH());
+        shape(player.getImg(),player.getCenterX()+viewX, player.getCenterY()+viewY, player.facing*player.getW(), player.getH());
     }
 
     private void drawGui()
     {
         fill(255, 255, 255);
         textSize(height / 30);
-        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() +"  "+ frameRate, width/20, height/20);
+        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() + "  " + frameRate, width / 20, height / 20);
         
-        shape(level, width-width/5, height-height/5, width/5, height/5);
+        shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
 
     }
 
@@ -177,7 +167,7 @@ public class GameActivity extends PApplet
 
             for (int i= 0; i<allBlocks.length; i++)
             {
-                staticBlock[i]= new StaticBlock(allBlocks[i]);
+                staticBlock[i]= new StaticBlock(allBlocks[i], blockshape);
             }
         }
     }
@@ -193,7 +183,7 @@ public class GameActivity extends PApplet
 
             for (int i = 0; i<allEnemies.length; i++)
             {
-                enemies[i] = new Enemy(allEnemies[i]);
+                enemies[i] = new Enemy(allEnemies[i], enemyshape);
             }
         }
     }
@@ -201,7 +191,7 @@ public class GameActivity extends PApplet
     private void initPlayer()
     {
         PShape playerShape=level.findChild("player");
-        player=new Player(playerShape);
+        player=new Player(playerShape, playershape);
     }
 
 
@@ -224,13 +214,14 @@ public class GameActivity extends PApplet
 
             float yS = mouseY - pmouseY;
 
-            player.setSpeed(xS, yS);
+            player.setXSpeed(xS);
+            player.setYSpeed(yS);
 
     }
 
-    ArrayList<StaticBlock> getVisibleBlocks()
+    ArrayList<AbstractObject> getVisibleObjects()
     {
-        ArrayList<StaticBlock> result = new ArrayList<StaticBlock>();
+        ArrayList<AbstractObject> result = new ArrayList<AbstractObject>();
 
         for (int i=0; i<staticBlock.length; i++)
         {
@@ -240,16 +231,9 @@ public class GameActivity extends PApplet
             }
         }
 
-        return result;
-    }
-
-    ArrayList<Enemy> getVisibleEnemies()
-    {
-        ArrayList<Enemy> result = new ArrayList<Enemy>();
-
         for (int i=0; i<enemies.length; i++)
         {
-            if (!(enemies[i].getX1() + viewX < 0 || enemies[i].getX() + viewX > width || enemies[i].getY1() + viewY < 0 || enemies[i].getY() + viewY > height))
+            if (!(enemies[i].getX1() + viewX < -50 || enemies[i].getX() + viewX > width+50 || enemies[i].getY1() + viewY < -50 || enemies[i].getY() + viewY > height+50))
             {
                 result.add(enemies[i]);
             }

@@ -1,5 +1,7 @@
 package objects;
 
+import java.util.ArrayList;
+
 import processing.core.PShape;
 
 
@@ -7,28 +9,18 @@ import processing.core.PShape;
 /**
  * Created by aend on 12.08.15.
  */
-public class Player extends AbstractDynamicObject
+public class Player extends AbstractObject
 {
     public int facing;
     public int health;
     private int gold;
 
-    public Player(PShape shape)
+    public Player(PShape shape, PShape img)
     {
-        super(shape);
+        super(shape, img);
         health=100;
         gold=0;
         facing=1;
-    }
-
-    public float getCenterX()
-    {
-        return x+(w/2);
-    }
-
-    public float getCenterY()
-    {
-        return y+(h/2);
     }
 
     public int getHealth()
@@ -41,45 +33,43 @@ public class Player extends AbstractDynamicObject
         return gold;
     }
 
-    public void update()
+    public void update(ArrayList<AbstractObject>others)
     {
+
+        setYSpeed(ySpeed+(float)0.3);
+        collision(others);
         super.update();
-        xSpeed*=0.95;
-        ySpeed*=0.95;
     }
 
 
 
-    public void collideBlock(AbstractStaticObject other)
+    public void collision(ArrayList<AbstractObject> others)
     {
-        if (other.name=='e') {health--;}
-        if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
+        for (int i=0; i<others.size(); i++)
         {
-            if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()))
-            {
-                xSpeed=0;
-            }
+            AbstractObject other= others.get(i);
 
-            if (!(y+ySpeed>other.getY1())||y+h+ySpeed<other.getY())
+            if (!(x+xSpeed > other.getX1() || getX1()+xSpeed < other.getX() || y+ySpeed > other.getY1() || getY1()+ySpeed < other.getY()))
             {
-                ySpeed=0;
-            }
-        }
-    }
+                if (other.type == 'e')
+                {
+                    img.setVisible(false);
+                    health--;
+                    img.setVisible(true);
+                }
 
-    public void collideEnemy(Enemy other)
-    {
-        if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()||y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
-        {
-            health--;
-            if (!(x+xSpeed>other.getX1()||x+w+xSpeed<other.getX()))
-            {
-                xSpeed=0;
-            }
+                if (other.type == 'b')
+                {
+                    if (!(x + xSpeed > other.getX1() || getX1() + xSpeed < other.getX()))
+                    {
+                        setXSpeed(0);
+                    }
 
-            if (!(y+ySpeed>other.getY1()||y+h+ySpeed<other.getY()))
-            {
-                ySpeed=0;
+                    if (!(y + ySpeed > other.getY1()) || getY1() + ySpeed < other.getY())
+                    {
+                        setYSpeed(0);
+                    }
+                }
             }
         }
     }

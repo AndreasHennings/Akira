@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\judith\Documents\GitHub\android\app\libs\processing-core.jar"
+        jar="/home/aend/StudioProjects/android/app/libs/processing-core.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="4453559376f395bba2da0e60ccbfb8e03323cd50">
-        <dex dex="C:\Users\judith\Documents\GitHub\android\app\build\intermediates\pre-dexed\debug\processing-core-cc0fe1836690fb5a5ced391df26ca2e4d6347859.jar" />
+        <dex dex="/home/aend/StudioProjects/android/app/build/intermediates/pre-dexed/debug/processing-core-da7693ceade9622575288c91cc2327f8c2b6652c.jar" />
     </item>
 
 </items>
