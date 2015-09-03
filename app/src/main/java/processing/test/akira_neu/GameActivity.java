@@ -4,7 +4,6 @@ package processing.test.akira_neu;
 
 import java.util.ArrayList;
 
-import objects.AbstractObject;
 import objects.Enemy;
 import objects.Player;
 import objects.StaticBlock;
