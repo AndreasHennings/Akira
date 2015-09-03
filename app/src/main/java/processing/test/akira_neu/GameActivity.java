@@ -14,7 +14,7 @@ import processing.core.PShape;
 
 public class GameActivity extends PApplet
 {
-    PShape level;  //Declaring a new .svg file. Level contains all objects of a level
+    PShape level;  //Declaring a new .svg file. 'Level' contains all information about
     PShape playershape;
     PShape blockshape;
     PShape enemyshape;
@@ -25,8 +25,9 @@ public class GameActivity extends PApplet
     public Player player;
 
 
+    ArrayList<Enemy> visibleEnemies;
+    ArrayList<StaticBlock> visibleBlocks;
 
-    ArrayList<AbstractObject> visibleObjects;
 
     String filenameLevel = "testlevel2.svg";
 
@@ -61,7 +62,8 @@ public class GameActivity extends PApplet
     //This method is the game loop.Will be repeated during gameplay
     public void draw()
     {
-        visibleObjects=getVisibleObjects();
+        visibleBlocks=getVisibleBlocks();
+        visibleEnemies=getVisibleEnemies();
 
         scroll();
         update();
@@ -84,20 +86,15 @@ public class GameActivity extends PApplet
 
     private void updatePlayer()
     {
-        player.update(visibleObjects);
+        player.update(visibleBlocks, visibleEnemies);
     }
 
     private void updateEnemies()
     {
-        for (int i=0; i<visibleObjects.size();i++)
+        for (int i=0; i<visibleEnemies.size();i++)
         {
-            AbstractObject ao = visibleObjects.get(i);
-            if (ao.getType()=='e')
-            {
-                ao.setXSpeed((player.getCenterX()-ao.getCenterX())*(float)0.03);
-                ao.setYSpeed((player.getCenterY()-ao.getCenterY())*(float)0.03);
-                ao.update();
-            }
+            Enemy e = visibleEnemies.get(i);
+            e.update(visibleBlocks, player);
         }
     }
 
@@ -118,10 +115,16 @@ public class GameActivity extends PApplet
     private void drawObjects()
     {
         shapeMode(CORNER);
-        for (int i=0; i<visibleObjects.size(); i++)
+        for (int i=0; i<visibleBlocks.size(); i++)
         {
-            AbstractObject sb = visibleObjects.get(i);
+            StaticBlock sb = visibleBlocks.get(i);
             shape(sb.getImg(), sb.getX() + viewX, sb.getY() + viewY, sb.getW(), sb.getH());
+        }
+
+        for (int i=0; i<visibleEnemies.size(); i++)
+        {
+            Enemy e = visibleEnemies.get(i);
+            shape(e.getImg(), e.getX() + viewX, e.getY() + viewY, e.getW(), e.getH());
         }
     }
 
@@ -130,7 +133,7 @@ public class GameActivity extends PApplet
     private void drawPlayer()
     {
         shapeMode(CENTER);
-        shape(player.getImg(),player.getCenterX()+viewX, player.getCenterY()+viewY, player.facing*player.getW(), player.getH());
+        shape(player.getImg(), player.getCenterX() + viewX, player.getCenterY() + viewY, player.facing * player.getW(), player.getH());
     }
 
     private void drawGui()
@@ -138,7 +141,7 @@ public class GameActivity extends PApplet
         fill(255, 255, 255);
         textSize(height / 30);
         text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() + "  " + frameRate, width / 20, height / 20);
-        
+
         shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
 
     }
@@ -219,11 +222,25 @@ public class GameActivity extends PApplet
 
     }
 
-    ArrayList<AbstractObject> getVisibleObjects()
+    ArrayList<Enemy> getVisibleEnemies()
     {
-        ArrayList<AbstractObject> result = new ArrayList<AbstractObject>();
+        ArrayList<Enemy> result = new ArrayList<Enemy>();
 
-        for (int i=0; i<staticBlock.length; i++)
+        for (int i=0; i<enemies.length; i++)
+        {
+            if (!(enemies[i].getX1() + viewX < -100 || enemies[i].getX() + viewX > width+100 || enemies[i].getY1() + viewY < -100 || enemies[i].getY() + viewY > height+100))
+            {
+                result.add(enemies[i]);
+            }
+        }
+        return result;
+    }
+
+    ArrayList<StaticBlock> getVisibleBlocks()
+    {
+        ArrayList<StaticBlock> result = new ArrayList<StaticBlock>();
+
+        for (int i = 0; i < staticBlock.length; i++)
         {
             if (!(staticBlock[i].getX1() + viewX < 0 || staticBlock[i].getX() + viewX > width || staticBlock[i].getY1() + viewY < 0 || staticBlock[i].getY() + viewY > height))
             {
@@ -231,19 +248,7 @@ public class GameActivity extends PApplet
             }
         }
 
-        for (int i=0; i<enemies.length; i++)
-        {
-            if (!(enemies[i].getX1() + viewX < -50 || enemies[i].getX() + viewX > width+50 || enemies[i].getY1() + viewY < -50 || enemies[i].getY() + viewY > height+50))
-            {
-                result.add(enemies[i]);
-            }
-        }
-
         return result;
     }
-
-
-
-
 }
 

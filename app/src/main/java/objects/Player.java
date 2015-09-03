@@ -21,6 +21,7 @@ public class Player extends AbstractObject
         health=100;
         gold=0;
         facing=1;
+        type='p';
     }
 
     public int getHealth()
@@ -33,44 +34,28 @@ public class Player extends AbstractObject
         return gold;
     }
 
-    public void update(ArrayList<AbstractObject>others)
+    public void update(ArrayList<StaticBlock>vb, ArrayList<Enemy> ve)
     {
-
         setYSpeed(ySpeed+(float)0.3);
-        collision(others);
-        super.update();
+        collideEnemy(ve);
+        super.update(vb);
     }
 
-
-
-    public void collision(ArrayList<AbstractObject> others)
+    public void collideEnemy(ArrayList<Enemy> others)
     {
         for (int i=0; i<others.size(); i++)
         {
-            AbstractObject other= others.get(i);
+            Enemy other= others.get(i);
 
-            if (!(x+xSpeed > other.getX1() || getX1()+xSpeed < other.getX() || y+ySpeed > other.getY1() || getY1()+ySpeed < other.getY()))
+            if (!(x + xSpeed > other.getX1() || getX1() + xSpeed < other.getX() || y + ySpeed > other.getY1() || getY1() + ySpeed < other.getY()))
             {
-                if (other.type == 'e')
-                {
-                    img.setVisible(false);
-                    health--;
-                    img.setVisible(true);
-                }
-
-                if (other.type == 'b')
-                {
-                    if (!(x + xSpeed > other.getX1() || getX1() + xSpeed < other.getX()))
-                    {
-                        setXSpeed(0);
-                    }
-
-                    if (!(y + ySpeed > other.getY1()) || getY1() + ySpeed < other.getY())
-                    {
-                        setYSpeed(0);
-                    }
-                }
+                health--;
+                break;
             }
         }
     }
+
+
+
+
 }

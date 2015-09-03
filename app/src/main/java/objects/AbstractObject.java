@@ -1,5 +1,7 @@
 package objects;
 
+import java.util.ArrayList;
+
 import processing.core.PShape;
 
 /**
@@ -115,15 +117,36 @@ public class AbstractObject
     }
 
 
-    public void update()
+    public void update(ArrayList<StaticBlock> others)
     {
-
+        collideBlock(others);
         x+=xSpeed;
         y+=ySpeed;
 
         shape.translate(xSpeed, ySpeed);
-
     }
 
+    public void collideBlock(ArrayList<StaticBlock> others)
+    {
+        for (int i=0; i<others.size(); i++)
+        {
+            AbstractObject other= others.get(i);
 
+            if (!(x + xSpeed > other.getX1() || getX1() + xSpeed < other.getX() || y + ySpeed > other.getY1() || getY1() + ySpeed < other.getY()))
+            {
+
+                if (!(x + xSpeed > other.getX1() || getX1() + xSpeed < other.getX()))
+                {
+                    setXSpeed(xSpeed*(float)-0.1);
+                }
+
+                if (!(y + ySpeed > other.getY1()) || getY1() + ySpeed < other.getY())
+                {
+                    setYSpeed(ySpeed*(float)-0.1);
+                }
+
+                break;
+            }
+        }
+    }
 }
