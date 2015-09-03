@@ -86,6 +86,7 @@ public class GameActivity extends PApplet
 
     private void updatePlayer()
     {
+        if (player.health<1) {exit();}
         player.update(visibleBlocks, visibleEnemies);
     }
 
