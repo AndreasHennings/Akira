@@ -16,6 +16,7 @@ public class GameActivity extends PApplet
 {
     boolean gameRunning;
     PShape level;  //Declaring a new .svg file. 'Level' contains all information about
+    PShape background;
     PShape playershape;
     PShape blockshape;
     PShape enemyshape;
@@ -53,6 +54,7 @@ public class GameActivity extends PApplet
         //load resources from assets folder
 
         level=loadShape(filenameLevel);
+        background=loadShape("underWater.svg");
         playershape=loadShape("playershape.svg");
         blockshape=loadShape("blockshape.svg");
         enemyshape=loadShape("qualle.svg");
@@ -123,7 +125,9 @@ public class GameActivity extends PApplet
 
     public void display()
     {
-        background(0, 0, 255);
+        background(200-map(player.getCenterY(), 0, level.height, 0, 200),200-map(player.getCenterY(),0,level.height,0,200) ,255);
+
+
 
         drawObjects();
         drawGolds();
