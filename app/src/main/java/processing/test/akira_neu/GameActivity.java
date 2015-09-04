@@ -5,6 +5,7 @@ package processing.test.akira_neu;
 import java.util.ArrayList;
 
 import objects.Enemy;
+import objects.Gold;
 import objects.Player;
 import objects.StaticBlock;
 import processing.core.PApplet;
@@ -17,15 +18,19 @@ public class GameActivity extends PApplet
     PShape playershape;
     PShape blockshape;
     PShape enemyshape;
+    PShape goldshape;
 
 
     StaticBlock[] staticBlock;
-    public Enemy[] enemies;
-    public Player player;
+    Enemy[] enemies;
+    Player player;
+    Gold[] goldcoins = new Gold[30];
+
 
 
     ArrayList<Enemy> visibleEnemies;
     ArrayList<StaticBlock> visibleBlocks;
+    ArrayList<Gold> visibleGold;
 
 
     String filenameLevel = "testlevel2.svg";
@@ -41,7 +46,6 @@ public class GameActivity extends PApplet
         size(displayWidth, displayHeight);
         //creates width und height variables representing physical display size
 
-        smooth();
 
         //load resources from assets folder
 
@@ -49,6 +53,7 @@ public class GameActivity extends PApplet
         playershape=loadShape("playershape.svg");
         blockshape=loadShape("blockshape.svg");
         enemyshape=loadShape("qualle.svg");
+        goldshape=loadShape("gold.svg");
 
 
 
@@ -63,6 +68,8 @@ public class GameActivity extends PApplet
     {
         visibleBlocks=getVisibleBlocks();
         visibleEnemies=getVisibleEnemies();
+        visibleGold=getVisibleGolds();
+
 
         scroll();
         update();
@@ -86,7 +93,7 @@ public class GameActivity extends PApplet
     private void updatePlayer()
     {
         if (player.health<1) {exit();}//
-        player.update(visibleBlocks, visibleEnemies);
+        player.update(visibleBlocks, visibleEnemies, visibleGold);
     }
 
     private void updateEnemies()
@@ -107,7 +114,7 @@ public class GameActivity extends PApplet
         background(0, 0, 255);
 
         drawObjects();
-
+        drawGolds();
         drawPlayer();
         drawGui();
     }
@@ -128,6 +135,17 @@ public class GameActivity extends PApplet
         }
     }
 
+    public void drawGolds()
+    {
+        shapeMode(CORNER);
+        for (int i=0; i<visibleGold.size(); i++)
+        {
+            Gold g = visibleGold.get(i);
+            shape(g.getImg(), g.getX() + viewX, g.getY() + viewY, g.getW(), g.getH());
+        }
+
+    }
+
 
 
     private void drawPlayer()
@@ -140,7 +158,7 @@ public class GameActivity extends PApplet
     {
         fill(255, 255, 255);
         textSize(height / 30);
-        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() + "  " + frameRate, width / 20, height / 20);
+        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() + "/"+goldcoins.length+"   " + frameRate, width / 20, height / 20);
 
         shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
 
@@ -155,6 +173,7 @@ public class GameActivity extends PApplet
         initBlocks();
         initEnemies();
         initPlayer();
+        initGold();
 
     }
 
@@ -195,6 +214,35 @@ public class GameActivity extends PApplet
     {
         PShape playerShape=level.findChild("player");
         player=new Player(playerShape, playershape);
+    }
+
+    private void initGold()
+    {
+        int i=0;
+        while (i<goldcoins.length)
+        {
+            float x = random (100, level.getWidth()-100);
+            float y = random(100, level.getHeight()-100);
+
+            boolean free = true;
+
+            for (int j =0; j<staticBlock.length; j++)
+            {
+
+                if (!(staticBlock[j].getX1()< x-30 || staticBlock[j].getX() > x+30 || staticBlock[j].getY1()  < y-30 || staticBlock[j].getY()  > y+30))
+                {
+                    free=false;
+                }
+            }
+
+            if (free)
+            {
+                goldcoins[i] = new Gold(goldshape, x, y);
+                i++;
+            }
+
+        }
+
     }
 
 
@@ -245,6 +293,24 @@ public class GameActivity extends PApplet
             if (!(staticBlock[i].getX1() + viewX < 0 || staticBlock[i].getX() + viewX > width || staticBlock[i].getY1() + viewY < 0 || staticBlock[i].getY() + viewY > height))
             {
                 result.add(staticBlock[i]);
+            }
+        }
+
+        return result;
+    }
+
+    ArrayList<Gold> getVisibleGolds()
+    {
+        ArrayList<Gold> result = new ArrayList<Gold>();
+
+        for (int i = 0; i < goldcoins.length; i++)
+        {
+            if (!(goldcoins[i].getX1() + viewX < 0 || goldcoins[i].getX() + viewX > width || goldcoins[i].getY1() + viewY < 0 || goldcoins[i].getY() + viewY > height))
+            {
+                if (goldcoins[i].getAvailable())
+                {
+                    result.add(goldcoins[i]);
+                }
             }
         }
 

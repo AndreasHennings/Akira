@@ -34,10 +34,11 @@ public class Player extends AbstractObject
         return gold;
     }
 
-    public void update(ArrayList<StaticBlock>vb, ArrayList<Enemy> ve)
+    public void update(ArrayList<StaticBlock>vb, ArrayList<Enemy> ve, ArrayList<Gold> vg)
     {
         setYSpeed(ySpeed+(float)0.3);
         collideEnemy(ve);
+        collideGold(vg);
         super.update(vb);
     }
 
@@ -50,6 +51,21 @@ public class Player extends AbstractObject
             if (!(x + xSpeed > other.getX1() || getX1() + xSpeed < other.getX() || y + ySpeed > other.getY1() || getY1() + ySpeed < other.getY()))
             {
                 health--;
+                break;
+            }
+        }
+    }
+
+    public void collideGold(ArrayList<Gold> others)
+    {
+        for (int i=0; i<others.size(); i++)
+        {
+            Gold other= others.get(i);
+
+            if (!(x + xSpeed > other.getX1() || getX1() + xSpeed < other.getX() || y + ySpeed > other.getY1() || getY1() + ySpeed < other.getY()))
+            {
+                gold++;
+                other.setAvailable(false);
                 break;
             }
         }
