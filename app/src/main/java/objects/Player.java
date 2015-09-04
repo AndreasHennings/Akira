@@ -3,7 +3,7 @@ package objects;
 import java.util.ArrayList;
 
 import processing.core.PShape;
-
+import processing.test.akira_neu.GameActivity;
 
 
 /**
@@ -14,11 +14,12 @@ public class Player extends AbstractObject
     public int facing;
     public int health;
     private int gold;
+    public final static int MAXHEALTH =255;
 
     public Player(PShape shape, PShape img)
     {
         super(shape, img);
-        health=100;
+        health=MAXHEALTH;
         gold=0;
         facing=1;
         type='p';
@@ -37,10 +38,13 @@ public class Player extends AbstractObject
     public void update(ArrayList<StaticBlock>vb, ArrayList<Enemy> ve, ArrayList<Gold> vg)
     {
         setYSpeed(ySpeed+(float)0.3);
+
         collideEnemy(ve);
         collideGold(vg);
         super.update(vb);
     }
+
+
 
     public void collideEnemy(ArrayList<Enemy> others)
     {
@@ -52,6 +56,7 @@ public class Player extends AbstractObject
             {
                 health--;
                 break;
+
             }
         }
     }

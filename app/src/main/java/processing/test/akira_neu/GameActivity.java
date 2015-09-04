@@ -14,6 +14,7 @@ import processing.core.PShape;
 
 public class GameActivity extends PApplet
 {
+    boolean gameRunning;
     PShape level;  //Declaring a new .svg file. 'Level' contains all information about
     PShape playershape;
     PShape blockshape;
@@ -24,7 +25,7 @@ public class GameActivity extends PApplet
     StaticBlock[] staticBlock;
     Enemy[] enemies;
     Player player;
-    Gold[] goldcoins = new Gold[30];
+    Gold[] goldcoins = new Gold[100];
 
 
 
@@ -39,10 +40,12 @@ public class GameActivity extends PApplet
     float viewX;  // parameters needed for scrolling view. Determine the position of the
     float viewY;  // upper left corner of the level
 
+
     public void setup() //everything inside will be done just once
     {
        // orientation(LANDSCAPE);
 
+        gameRunning=true;
         size(displayWidth, displayHeight);
         //creates width und height variables representing physical display size
 
@@ -66,14 +69,22 @@ public class GameActivity extends PApplet
     //This method is the game loop.Will be repeated during gameplay
     public void draw()
     {
-        visibleBlocks=getVisibleBlocks();
-        visibleEnemies=getVisibleEnemies();
-        visibleGold=getVisibleGolds();
+        if (gameRunning)
+        {
+            visibleBlocks = getVisibleBlocks();
+            visibleEnemies = getVisibleEnemies();
+            visibleGold = getVisibleGolds();
 
 
-        scroll();
-        update();
-        display();
+            scroll();
+            update();
+            display();
+        }
+
+        else
+        {
+            gameOver();
+        }
     }
 
     private void scroll()
@@ -92,7 +103,8 @@ public class GameActivity extends PApplet
 
     private void updatePlayer()
     {
-        if (player.health<1) {exit();}//
+        if (player.health<player.MAXHEALTH && (frameCount%100==0)) {player.health++;}
+        if (player.health<1||player.getGold()==goldcoins.length) {gameRunning=false;}//
         player.update(visibleBlocks, visibleEnemies, visibleGold);
     }
 
@@ -156,9 +168,9 @@ public class GameActivity extends PApplet
 
     private void drawGui()
     {
-        fill(255, 255, 255);
+        fill(255, player.health, player.health);
         textSize(height / 30);
-        text("Health: " + player.getHealth() + "/100 * Gold: " + player.getGold() + "/"+goldcoins.length+"   " + frameRate, width / 20, height / 20);
+        text("Health: " + player.getHealth() + "/"+player.MAXHEALTH+" * Gold: " + player.getGold() + "/" + goldcoins.length + "   " + frameRate, width / 20, height / 20);
 
         shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
 
@@ -239,6 +251,7 @@ public class GameActivity extends PApplet
             {
                 goldcoins[i] = new Gold(goldshape, x, y);
                 i++;
+
             }
 
         }
@@ -252,6 +265,8 @@ public class GameActivity extends PApplet
     public void mouseDragged()
     {
 
+        if (gameRunning)
+        {
             float xS = mouseX - pmouseX;
             if (xS < 0)
             {
@@ -267,7 +282,12 @@ public class GameActivity extends PApplet
 
             player.setXSpeed(xS);
             player.setYSpeed(yS);
+        }
 
+        else
+        {
+            exit();
+        }
     }
 
     ArrayList<Enemy> getVisibleEnemies()
@@ -315,6 +335,20 @@ public class GameActivity extends PApplet
         }
 
         return result;
+    }
+
+    private void gameOver()
+    {
+           background(random(0,255), random(0,255), random(0,255));
+            fill(255, 0, 0);
+            textSize(height / 10);
+            text("GAME OVER!",30,height/2-height/10);
+            textSize(height/20);
+            int score = player.getGold()*100+player.getHealth();
+            text("Your Score: " + score, 30, height / 2);
+            text("Touch Screen to exit",30,height/2+height/10);
+
+
     }
 }
 
