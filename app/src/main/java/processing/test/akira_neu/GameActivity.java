@@ -205,6 +205,7 @@ public class GameActivity extends PApplet
 
     /**********************************************************************************************/
 
+    //
 
     private void initObjects()
     {
