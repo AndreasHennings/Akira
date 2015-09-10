@@ -15,8 +15,9 @@ import processing.core.PShape;
 public class GameActivity extends PApplet
 {
     boolean gameRunning;
+
     PShape level;  //Declaring a new .svg file. 'Level' contains all information about
-    PShape background;
+
     PShape playershape;
     PShape blockshape;
     PShape enemyshape;
@@ -26,7 +27,7 @@ public class GameActivity extends PApplet
     StaticBlock[] staticBlock;
     Enemy[] enemies;
     Player player;
-    Gold[] goldcoins = new Gold[100];
+    Gold[] goldcoins = new Gold[30];
 
 
 
@@ -35,7 +36,7 @@ public class GameActivity extends PApplet
     ArrayList<Gold> visibleGold;
 
 
-    String filenameLevel = "testlevel2.svg";
+    String filenameLevel = "testlevel.svg";
 
     //view parameters
     float viewX;  // parameters needed for scrolling view. Determine the position of the
@@ -54,7 +55,7 @@ public class GameActivity extends PApplet
         //load resources from assets folder
 
         level=loadShape(filenameLevel);
-        background=loadShape("underWater.svg");
+
         playershape=loadShape("playershape.svg");
         blockshape=loadShape("blockshape.svg");
         enemyshape=loadShape("qualle.svg");
@@ -290,7 +291,7 @@ public class GameActivity extends PApplet
 
         else
         {
-            exit();
+            setup();
         }
     }
 
@@ -351,8 +352,6 @@ public class GameActivity extends PApplet
             int score = player.getGold()*100+player.getHealth();
             text("Your Score: " + score, 30, height / 2);
             text("Touch Screen to exit",30,height/2+height/10);
-
-
     }
 }
 

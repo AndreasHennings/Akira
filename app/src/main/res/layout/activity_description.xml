@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/description"
         android:id="@+id/description_textView"
-        android:elegantTextHeight="false"
+
         android:textSize="22dp" />
 
 </RelativeLayout>

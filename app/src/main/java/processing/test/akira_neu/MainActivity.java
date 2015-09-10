@@ -20,21 +20,25 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button Start_button = (Button) findViewById(R.id.start_button);
+        Button startButton = (Button) findViewById(R.id.start_button);
 
-        Start_button.setOnClickListener(new View.OnClickListener() {
+        startButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Intent startGame = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(startGame);
             }
         });
 
-        Button Description_button = (Button)findViewById(R.id.description_button);
+        Button descriptionButton = (Button)findViewById(R.id.description_button);
 
-        Description_button.setOnClickListener(new View.OnClickListener() {
+        descriptionButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Intent showDescript = new Intent(MainActivity.this, DescriptionActivity.class);
                 startActivity(showDescript);
             }

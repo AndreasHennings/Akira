@@ -16,6 +16,6 @@ public class DescriptionActivity extends Activity {
         setContentView(R.layout.activity_description);
     }
 
-    TextView description = (TextView) findViewById(R.id.description_textView);
+
 
 }
