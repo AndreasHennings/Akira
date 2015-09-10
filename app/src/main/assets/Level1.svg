@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="5000"
-   height="5000"
+   width="4952.0024"
+   height="4475.7549"
    id="svg3182"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -25,8 +25,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.19527872"
-     inkscape:cx="2259.419"
-     inkscape:cy="2826.32"
+     inkscape:cx="2223.6377"
+     inkscape:cy="2846.8539"
      inkscape:document-units="px"
      showgrid="false"
      inkscape:window-width="1354"
@@ -34,7 +34,11 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg3182" />
+     inkscape:current-layer="svg3182"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata3187">
     <rdf:RDF>
@@ -43,34 +47,27 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      id="enemies"
-     inkscape:label="#g3423"
-     style="fill:#ff0000">
+     inkscape:label="#g3034"
+     transform="translate(-35.78125,-544.77875)">
     <rect
-       y="1440"
-       x="880"
-       height="180"
-       width="200"
+       y="1173.714"
+       x="644.43927"
+       height="108.3076"
+       width="107.82406"
        id="rect3361"
        style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <rect
-       y="4230"
-       x="3310"
-       height="180"
-       width="200"
+       y="3728.1531"
+       x="3033.4722"
+       height="681.8468"
+       width="476.52783"
        id="rect3361-1"
-       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-    <rect
-       y="3640"
-       x="4360"
-       height="180"
-       width="200"
-       id="rect3361-3"
        style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <rect
        y="1230"
@@ -80,32 +77,11 @@
        id="rect3361-19"
        style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <rect
-       y="4290"
-       x="1240"
-       height="180"
-       width="200"
-       id="rect3361-35"
-       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-    <rect
        y="3190"
        x="880"
        height="180"
        width="200"
        id="rect3361-9"
-       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-    <rect
-       y="2390"
-       x="2960"
-       height="180"
-       width="200"
-       id="rect3361-0"
-       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
-    <rect
-       y="970"
-       x="2510"
-       height="180"
-       width="200"
-       id="rect3361-2"
        style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
   </g>
   <rect
@@ -113,19 +89,13 @@
      id="player"
      width="40"
      height="150"
-     x="1745.6775"
-     y="1396.9843"
+     x="1709.8962"
+     y="852.20551"
      inkscape:label="#rect3433" />
   <g
      id="blocks"
-     inkscape:label="#g3754">
-    <rect
-       y="1650.9408"
-       x="1152.1992"
-       height="61.450626"
-       width="1229.0126"
-       id="rect3744"
-       style="fill:#1a1a1a;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+     inkscape:label="#g3040"
+     transform="translate(-35.78125,-544.77875)">
     <rect
        y="611.401"
        x="71.692398"

@@ -16,6 +16,8 @@ public class GameActivity extends PApplet
 {
     boolean gameRunning;
 
+    int levelnr = 1;
+
     PShape level;  //Declaring a new .svg file. 'Level' contains all information about
 
     PShape playershape;
@@ -27,7 +29,7 @@ public class GameActivity extends PApplet
     StaticBlock[] staticBlock;
     Enemy[] enemies;
     Player player;
-    Gold[] goldcoins = new Gold[30];
+    Gold[] goldcoins;
 
 
 
@@ -36,7 +38,7 @@ public class GameActivity extends PApplet
     ArrayList<Gold> visibleGold;
 
 
-    String filenameLevel = "testlevel.svg";
+
 
     //view parameters
     float viewX;  // parameters needed for scrolling view. Determine the position of the
@@ -53,15 +55,19 @@ public class GameActivity extends PApplet
 
 
         //load resources from assets folder
+        String filenameLevel="Level"+levelnr+".svg";
 
         level=loadShape(filenameLevel);
 
-        playershape=loadShape("playershape.svg");
-        blockshape=loadShape("blockshape.svg");
-        enemyshape=loadShape("qualle.svg");
-        goldshape=loadShape("gold.svg");
+        if (levelnr==1)
+        {
+            playershape = loadShape("playershape.svg");
+            blockshape = loadShape("blockshape.svg");
+            enemyshape = loadShape("qualle.svg");
+            goldshape = loadShape("gold.svg");
 
-
+        }
+        goldcoins = new Gold[levelnr*5];
 
         initObjects();  //see below for details
 
@@ -175,7 +181,7 @@ public class GameActivity extends PApplet
     {
         fill(255, player.health, player.health);
         textSize(height / 30);
-        text("Health: " + player.getHealth() + "/"+player.MAXHEALTH+" * Gold: " + player.getGold() + "/" + goldcoins.length + "   " + frameRate, width / 20, height / 20);
+        text("Health: " + player.getHealth() + "/" + player.MAXHEALTH + " * Gold: " + player.getGold() + "/" + goldcoins.length, width / 20, height / 20);
 
         shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
 
@@ -238,8 +244,8 @@ public class GameActivity extends PApplet
         int i=0;
         while (i<goldcoins.length)
         {
-            float x = random (100, level.getWidth()-100);
-            float y = random(100, level.getHeight()-100);
+            float x = random (200, level.getWidth()-200);
+            float y = random(200, level.getHeight()-200);
 
             boolean free = true;
 
@@ -291,6 +297,7 @@ public class GameActivity extends PApplet
 
         else
         {
+            levelnr++;
             setup();
         }
     }
@@ -344,7 +351,7 @@ public class GameActivity extends PApplet
 
     private void gameOver()
     {
-           background(random(0,255), random(0,255), random(0,255));
+            background(random(0,255), random(0,255), random(0,255));
             fill(255, 0, 0);
             textSize(height / 10);
             text("GAME OVER!",30,height/2-height/10);
