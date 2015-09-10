@@ -6,6 +6,9 @@
 
     <uses-sdk android:minSdkVersion="15" />
 
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:debuggable="true"
@@ -14,18 +17,19 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".GameActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
-
-
-
+        </activity>
+        <activity
+            android:name=".DescriptionActivity"
+            android:label="@string/title_activity_description" >
         </activity>
     </application>
 
