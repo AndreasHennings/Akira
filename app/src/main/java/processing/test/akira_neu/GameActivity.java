@@ -15,6 +15,7 @@ import processing.core.PShape;
 public class GameActivity extends PApplet
 {
     boolean gameRunning;
+    boolean nextLevel;
 
     int levelnr = 1;
 
@@ -50,6 +51,8 @@ public class GameActivity extends PApplet
        // orientation(LANDSCAPE);
 
         gameRunning=true;
+        nextLevel=false;
+
         size(displayWidth, displayHeight);
         //creates width und height variables representing physical display size
 
@@ -88,6 +91,7 @@ public class GameActivity extends PApplet
             scroll();
             update();
             display();
+            checkGameOver();
         }
 
         else
@@ -96,6 +100,8 @@ public class GameActivity extends PApplet
         }
     }
 
+
+
     private void scroll()
     {
         viewX=width/2-player.getCenterX();
@@ -103,6 +109,15 @@ public class GameActivity extends PApplet
     }
 
     /**********************************************************************************************/
+    private void checkGameOver()
+    {
+        if (player.health<1)
+        {gameRunning=false;}
+        if (player.getGold()==goldcoins.length)
+        {gameRunning=false;
+        nextLevel=true;}//
+
+    }
 
     private void update()
     {
@@ -113,7 +128,7 @@ public class GameActivity extends PApplet
     private void updatePlayer()
     {
         if (player.health<player.MAXHEALTH && (frameCount%100==0)) {player.health++;}
-        if (player.health<1||player.getGold()==goldcoins.length) {gameRunning=false;}//
+
         player.update(visibleBlocks, visibleEnemies, visibleGold);
     }
 
@@ -297,8 +312,16 @@ public class GameActivity extends PApplet
 
         else
         {
-            levelnr++;
-            setup();
+            if (nextLevel)
+            {
+                levelnr++;
+                setup();
+            }
+
+            else
+            {
+                exit();
+            }
         }
     }
 
@@ -351,14 +374,32 @@ public class GameActivity extends PApplet
 
     private void gameOver()
     {
-            background(random(0,255), random(0,255), random(0,255));
+            background(0);
             fill(255, 0, 0);
-            textSize(height / 10);
-            text("GAME OVER!",30,height/2-height/10);
-            textSize(height/20);
-            int score = player.getGold()*100+player.getHealth();
-            text("Your Score: " + score, 30, height / 2);
-            text("Touch Screen to exit",30,height/2+height/10);
+            if (nextLevel==false)
+            {
+                textSize(height / 10);
+                text("GAME OVER!", 30, height / 2 - height / 10);
+                textSize(height / 20);
+                int score = player.getGold() * 100 + player.getHealth();
+                text("Your Score: " + score, 30, height / 2);
+                text("Wipe Screen to exit", 30, height / 2 + height / 10);
+            }
+
+            if (nextLevel)
+            {
+                textSize(height / 10);
+                text("CONGRATULATIONS!", 30, height / 2 - height / 10);
+                textSize(height / 20);
+                int score = player.getGold() * 100 + player.getHealth();
+                text("Your Score: " + score, 30, height / 2);
+                text("Wipe Screen for next Level", 30, height / 2 + height / 10);
+
+
+            }
+
+
+
     }
 }
 
