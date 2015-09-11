@@ -59,8 +59,15 @@ public class GameActivity extends PApplet
 
         //load resources from assets folder
         String filenameLevel="Level"+levelnr+".svg";
+        try
+        {
+            level = loadShape(filenameLevel);
+        }
 
-        level=loadShape(filenameLevel);
+        catch(Exception e)
+        {
+            gameOver();
+        }
 
         if (levelnr==1)
         {
