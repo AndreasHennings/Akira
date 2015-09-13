@@ -203,7 +203,7 @@ public class GameActivity extends PApplet
     {
         fill(255, player.health, player.health);
         textSize(height / 30);
-        text("Health: " + player.getHealth() + "/" + player.MAXHEALTH + " * Gold: " + player.getGold() + "/" + goldcoins.length, width / 20, height / 20);
+        text("Health: " + player.getHealth() + "/" + player.MAXHEALTH + " * Gold: " + player.getGold() + "/" + goldcoins.length+" * Score: "+getScore(), width / 20, height / 20);
 
         shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
 
@@ -390,17 +390,17 @@ public class GameActivity extends PApplet
                 text("GAME OVER!", 30, height / 2 - height / 10);
                 textSize(height / 20);
                 int score = player.getGold() * 100 + player.getHealth();
-                text("Your Score: " + score, 30, height / 2);
+                text("Your Score: " + getScore(), 30, height / 2);
                 text("Wipe Screen to exit", 30, height / 2 + height / 10);
             }
 
             if (nextLevel)
             {
                 textSize(height / 10);
-                text("CONGRATULATIONS!", 30, height / 2 - height / 10);
+                text("Level UP!", 30, height / 2 - height / 10);
                 textSize(height / 20);
                 int score = player.getGold() * 100 + player.getHealth();
-                text("Your Score: " + score, 30, height / 2);
+                text("Your Score: " + getScore(), 30, height / 2);
                 text("Wipe Screen for next Level", 30, height / 2 + height / 10);
 
 
@@ -408,6 +408,11 @@ public class GameActivity extends PApplet
 
 
 
+    }
+
+    private int getScore()
+    {
+        return (levelnr-1)*1000+player.getGold()*100+player.getHealth();
     }
 }
 

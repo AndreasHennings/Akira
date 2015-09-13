@@ -25,6 +25,14 @@ public class Player extends AbstractObject
         type='p';
     }
 
+    public void setX(float x)
+    {
+        this.x=x;
+    }
+
+
+
+
     public int getHealth()
     {
         return health;
