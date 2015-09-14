@@ -390,7 +390,6 @@ public class GameActivity extends PApplet
                 textSize(height / 10);
                 text("GAME OVER!", 30, height / 2 - height / 10);
                 textSize(height / 20);
-                int score = player.getGold() * 100 + player.getHealth();
                 text("Your Score: " + getScore(), 30, height / 2);
                 text("Wipe Screen to exit", 30, height / 2 + height / 10);
             }
@@ -400,11 +399,8 @@ public class GameActivity extends PApplet
                 textSize(height / 10);
                 text("Level UP!", 30, height / 2 - height / 10);
                 textSize(height / 20);
-                int score = player.getGold() * 100 + player.getHealth();
                 text("Your Score: " + getScore(), 30, height / 2);
                 text("Wipe Screen for next Level", 30, height / 2 + height / 10);
-
-
             }
 
     }
