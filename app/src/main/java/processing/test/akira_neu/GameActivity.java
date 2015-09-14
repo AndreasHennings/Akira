@@ -14,41 +14,34 @@ import processing.core.PShape;
 
 public class GameActivity extends PApplet
 {
-    boolean gameRunning;
-    boolean nextLevel;
+    private boolean gameRunning;
+    private boolean nextLevel;
 
-    int levelnr = 1;
+    private PShape level;  //Declaring a new .svg file. 'Level' contains all information about
+    private int levelnr = GameConfig.START_LEVEL;
 
-    PShape level;  //Declaring a new .svg file. 'Level' contains all information about
+    private PShape playershape;
+    private PShape blockshape;
+    private PShape enemyshape;
+    private PShape goldshape;
 
-    PShape playershape;
-    PShape blockshape;
-    PShape enemyshape;
-    PShape goldshape;
+    private StaticBlock[] staticBlock;
+    private Enemy[] enemies;
+    private Player player;
+    private Gold[] goldcoins;
 
-
-    StaticBlock[] staticBlock;
-    Enemy[] enemies;
-    Player player;
-    Gold[] goldcoins;
-
-
-
-    ArrayList<Enemy> visibleEnemies;
-    ArrayList<StaticBlock> visibleBlocks;
-    ArrayList<Gold> visibleGold;
-
-
-
+    private ArrayList<Enemy> visibleEnemies;
+    private ArrayList<StaticBlock> visibleBlocks;
+    private ArrayList<Gold> visibleGold;
 
     //view parameters
-    float viewX;  // parameters needed for scrolling view. Determine the position of the
-    float viewY;  // upper left corner of the level
+    private float viewX;  // parameters needed for scrolling view. Determine the position of the
+    private float viewY;  // upper left corner of the level
 
 
     public void setup() //everything inside will be done just once
     {
-       // orientation(LANDSCAPE);
+        orientation(PORTRAIT);
 
         gameRunning=true;
         nextLevel=false;
@@ -69,7 +62,7 @@ public class GameActivity extends PApplet
             gameOver();
         }
 
-        if (levelnr==1)
+        if (levelnr==GameConfig.START_LEVEL)
         {
             playershape = loadShape("playershape.svg");
             blockshape = loadShape("blockshape.svg");
@@ -77,7 +70,7 @@ public class GameActivity extends PApplet
             goldshape = loadShape("gold.svg");
 
         }
-        goldcoins = new Gold[levelnr*5];
+        goldcoins = new Gold[((int) random(GameConfig.MIN_GOLD, GameConfig.MAX_GOLD))];
 
         initObjects();  //see below for details
 
@@ -90,15 +83,8 @@ public class GameActivity extends PApplet
     {
         if (gameRunning)
         {
-            visibleBlocks = getVisibleBlocks();
-            visibleEnemies = getVisibleEnemies();
-            visibleGold = getVisibleGolds();
-
-
-            scroll();
             update();
             display();
-            checkGameOver();
         }
 
         else
@@ -107,112 +93,9 @@ public class GameActivity extends PApplet
         }
     }
 
-
-
-    private void scroll()
-    {
-        viewX=width/2-player.getCenterX();
-        viewY=height/2-player.getCenterY();
-    }
-
-    /**********************************************************************************************/
-    private void checkGameOver()
-    {
-        if (player.health<1)
-        {gameRunning=false;}
-        if (player.getGold()==goldcoins.length)
-        {gameRunning=false;
-        nextLevel=true;}//
-
-    }
-
-    private void update()
-    {
-        updatePlayer();
-        updateEnemies();
-    }
-
-    private void updatePlayer()
-    {
-        if (player.health<player.MAXHEALTH && (frameCount%100==0)) {player.health++;}
-
-        player.update(visibleBlocks, visibleEnemies, visibleGold);
-    }
-
-    private void updateEnemies()
-    {
-        for (int i=0; i<visibleEnemies.size();i++)
-        {
-            Enemy e = visibleEnemies.get(i);
-            e.update(visibleBlocks, player);
-        }
-    }
-
-
-
-    /**********************************************************************************************/
-
-    public void display()
-    {
-        background(200-map(player.getCenterY(), 0, level.height, 0, 200),200-map(player.getCenterY(),0,level.height,0,200) ,255);
-
-
-
-        drawObjects();
-        drawGolds();
-        drawPlayer();
-        drawGui();
-    }
-
-    private void drawObjects()
-    {
-        shapeMode(CORNER);
-        for (int i=0; i<visibleBlocks.size(); i++)
-        {
-            StaticBlock sb = visibleBlocks.get(i);
-            shape(sb.getImg(), sb.getX() + viewX, sb.getY() + viewY, sb.getW(), sb.getH());
-        }
-
-        for (int i=0; i<visibleEnemies.size(); i++)
-        {
-            Enemy e = visibleEnemies.get(i);
-            shape(e.getImg(), e.getX() + viewX, e.getY() + viewY, e.getW(), e.getH());
-        }
-    }
-
-    public void drawGolds()
-    {
-        shapeMode(CORNER);
-        for (int i=0; i<visibleGold.size(); i++)
-        {
-            Gold g = visibleGold.get(i);
-            shape(g.getImg(), g.getX() + viewX, g.getY() + viewY, g.getW(), g.getH());
-        }
-
-    }
-
-
-
-    private void drawPlayer()
-    {
-        shapeMode(CENTER);
-        shape(player.getImg(), player.getCenterX() + viewX, player.getCenterY() + viewY, player.facing * player.getW(), player.getH());
-    }
-
-    private void drawGui()
-    {
-        fill(255, player.health, player.health);
-        textSize(height / 30);
-        text("Health: " + player.getHealth() + "/" + player.MAXHEALTH + " * Gold: " + player.getGold() + "/" + goldcoins.length+" * Score: "+getScore(), width / 20, height / 20);
-
-        shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
-
-    }
-
-
-    /**********************************************************************************************/
-
-    //
+    /***********************************************************************************************
+     *    INIT - SHAPES ARE READ FROM .SVG FILE AND NEW OBJECTS CREATED
+     **********************************************************************************************/
 
     private void initObjects()
     {
@@ -220,7 +103,6 @@ public class GameActivity extends PApplet
         initEnemies();
         initPlayer();
         initGold();
-
     }
 
     private void initBlocks()
@@ -294,6 +176,168 @@ public class GameActivity extends PApplet
 
 
     /**********************************************************************************************/
+    /**********************************************************************************************/
+
+
+    private void update()
+    {
+        getAllVisibleElements();
+        updatePlayer();
+        updateEnemies();
+        checkGameOver();
+    }
+
+    private void getAllVisibleElements()
+    {
+        visibleBlocks = getVisibleBlocks();
+        visibleEnemies = getVisibleEnemies();
+        visibleGold = getVisibleGolds();
+    }
+
+    private ArrayList<Enemy> getVisibleEnemies()
+    {
+        ArrayList<Enemy> result = new ArrayList<Enemy>();
+
+        for (int i=0; i<enemies.length; i++)
+        {
+            if (!(enemies[i].getX1() + viewX < -100 || enemies[i].getX() + viewX > width+100 || enemies[i].getY1() + viewY < -100 || enemies[i].getY() + viewY > height+100))
+            {
+                result.add(enemies[i]);
+            }
+        }
+        return result;
+    }
+
+    private ArrayList<StaticBlock> getVisibleBlocks()
+    {
+        ArrayList<StaticBlock> result = new ArrayList<StaticBlock>();
+
+        for (int i = 0; i < staticBlock.length; i++)
+        {
+            if (!(staticBlock[i].getX1() + viewX < 0 || staticBlock[i].getX() + viewX > width || staticBlock[i].getY1() + viewY < 0 || staticBlock[i].getY() + viewY > height))
+            {
+                result.add(staticBlock[i]);
+            }
+        }
+
+        return result;
+    }
+
+    private ArrayList<Gold> getVisibleGolds()
+    {
+        ArrayList<Gold> result = new ArrayList<Gold>();
+
+        for (int i = 0; i < goldcoins.length; i++)
+        {
+            if (!(goldcoins[i].getX1() + viewX < 0 || goldcoins[i].getX() + viewX > width || goldcoins[i].getY1() + viewY < 0 || goldcoins[i].getY() + viewY > height))
+            {
+                if (goldcoins[i].getAvailable())
+                {
+                    result.add(goldcoins[i]);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private void updatePlayer()
+    {
+        if (player.health < player.MAXHEALTH && (frameCount%100==0)) {player.health++;}
+
+        player.update(visibleBlocks, visibleEnemies, visibleGold);
+    }
+
+    private void updateEnemies()
+    {
+        for (int i=0; i<visibleEnemies.size(); i++)
+        {
+            Enemy e = visibleEnemies.get(i);
+            e.update(visibleBlocks, player);
+        }
+    }
+
+    private void checkGameOver()
+    {
+        if (player.health<1)
+        {gameRunning=false;}
+        if (player.getGold()==goldcoins.length)
+        {gameRunning=false;
+            nextLevel=true;}//
+
+    }
+
+    /**********************************************************************************************/
+
+    private void display()
+    {
+        background(200-map(player.getCenterY(), 0, level.height, 0, 200),200-map(player.getCenterY(),0,level.height, 0, 200) ,255);
+        scroll();
+        drawBlocks();
+        drawEnemies();
+        drawGolds();
+        drawPlayer();
+        drawGui();
+    }
+
+    private void scroll()
+    {
+        viewX=width/2-player.getCenterX();
+        viewY = height/2-player.getCenterY();
+    }
+
+    private void drawBlocks()
+    {
+        shapeMode(CORNER);
+        for (int i = 0; i < visibleBlocks.size(); i++)
+        {
+            StaticBlock sb = visibleBlocks.get(i);
+            shape(sb.getImg(), sb.getX() + viewX, sb.getY() + viewY, sb.getW(), sb.getH());
+        }
+    }
+
+    private void drawEnemies()
+    {
+
+        for (int i=0; i<visibleEnemies.size(); i++)
+        {
+            Enemy e = visibleEnemies.get(i);
+            shape(e.getImg(), e.getX() + viewX, e.getY() + viewY, e.getW(), e.getH());
+        }
+    }
+
+    private void drawGolds()
+    {
+        shapeMode(CORNER);
+        for (int i=0; i<visibleGold.size(); i++)
+        {
+            Gold g = visibleGold.get(i);
+            shape(g.getImg(), g.getX() + viewX, g.getY() + viewY, g.getW(), g.getH());
+        }
+    }
+
+    private void drawPlayer()
+    {
+        shapeMode(CENTER);
+        shape(player.getImg(), player.getCenterX() + viewX, player.getCenterY() + viewY, player.facing * player.getW(), player.getH());
+    }
+
+    private void drawGui()
+    {
+        fill(255, player.health, player.health);
+        textSize(height / 30);
+        text("Health: " + player.getHealth() + "/" + player.MAXHEALTH + " * Gold: " + player.getGold() + "/" + goldcoins.length+" * Score: "+getScore(), width / 20, height / 20);
+
+        shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
+    }
+
+
+    /**********************************************************************************************/
+
+
+
+
+    /**********************************************************************************************/
 
 
     public void mouseDragged()
@@ -332,53 +376,10 @@ public class GameActivity extends PApplet
             }
         }
     }
+/**************************************************************************************************************************************************************************/
 
-    ArrayList<Enemy> getVisibleEnemies()
-    {
-        ArrayList<Enemy> result = new ArrayList<Enemy>();
 
-        for (int i=0; i<enemies.length; i++)
-        {
-            if (!(enemies[i].getX1() + viewX < -100 || enemies[i].getX() + viewX > width+100 || enemies[i].getY1() + viewY < -100 || enemies[i].getY() + viewY > height+100))
-            {
-                result.add(enemies[i]);
-            }
-        }
-        return result;
-    }
-
-    ArrayList<StaticBlock> getVisibleBlocks()
-    {
-        ArrayList<StaticBlock> result = new ArrayList<StaticBlock>();
-
-        for (int i = 0; i < staticBlock.length; i++)
-        {
-            if (!(staticBlock[i].getX1() + viewX < 0 || staticBlock[i].getX() + viewX > width || staticBlock[i].getY1() + viewY < 0 || staticBlock[i].getY() + viewY > height))
-            {
-                result.add(staticBlock[i]);
-            }
-        }
-
-        return result;
-    }
-
-    ArrayList<Gold> getVisibleGolds()
-    {
-        ArrayList<Gold> result = new ArrayList<Gold>();
-
-        for (int i = 0; i < goldcoins.length; i++)
-        {
-            if (!(goldcoins[i].getX1() + viewX < 0 || goldcoins[i].getX() + viewX > width || goldcoins[i].getY1() + viewY < 0 || goldcoins[i].getY() + viewY > height))
-            {
-                if (goldcoins[i].getAvailable())
-                {
-                    result.add(goldcoins[i]);
-                }
-            }
-        }
-
-        return result;
-    }
+/**********************************************************************************************************************************************************/
 
     private void gameOver()
     {
@@ -405,8 +406,6 @@ public class GameActivity extends PApplet
 
 
             }
-
-
 
     }
 
