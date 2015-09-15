@@ -18,7 +18,7 @@ public class GameActivity extends PApplet
     private boolean nextLevel;
 
     private PShape level;  //Declaring a new .svg file. 'Level' contains all information about
-    private int levelnr = GameConfig.START_LEVEL;
+    public int levelnr = GameConfig.START_LEVEL;
 
     private PShape playershape;
     private PShape blockshape;
@@ -37,6 +37,11 @@ public class GameActivity extends PApplet
     //view parameters
     private float viewX;  // parameters needed for scrolling view. Determine the position of the
     private float viewY;  // upper left corner of the level
+
+    public int getLevelnr()
+    {
+        return levelnr;
+    }
 
 
     public void setup() //everything inside will be done just once
@@ -133,7 +138,7 @@ public class GameActivity extends PApplet
 
             for (int i = 0; i<allEnemies.length; i++)
             {
-                enemies[i] = new Enemy(allEnemies[i], enemyshape);
+                enemies[i] = new Enemy(allEnemies[i], enemyshape, levelnr);
             }
         }
     }
@@ -149,15 +154,18 @@ public class GameActivity extends PApplet
         int i=0;
         while (i<goldcoins.length)
         {
-            float x = random (200, level.getWidth()-200);
-            float y = random(200, level.getHeight()-200);
+            float x = random (GameConfig.BORDER_DISTANCE, level.getWidth()- GameConfig.BORDER_DISTANCE);
+            float y = random(GameConfig.BORDER_DISTANCE, level.getHeight()- GameConfig.BORDER_DISTANCE);
 
             boolean free = true;
 
             for (int j =0; j<staticBlock.length; j++)
             {
 
-                if (!(staticBlock[j].getX1()< x-30 || staticBlock[j].getX() > x+30 || staticBlock[j].getY1()  < y-30 || staticBlock[j].getY()  > y+30))
+                if (!     (staticBlock[j].getX1() < x-GameConfig.BLOCK_DISTANCE
+                        || staticBlock[j].getX()  > x+GameConfig.BLOCK_DISTANCE
+                        || staticBlock[j].getY1() < y-GameConfig.BLOCK_DISTANCE
+                        || staticBlock[j].getY()  > y+GameConfig.BLOCK_DISTANCE))
                 {
                     free=false;
                 }
@@ -200,7 +208,10 @@ public class GameActivity extends PApplet
 
         for (int i=0; i<enemies.length; i++)
         {
-            if (!(enemies[i].getX1() + viewX < -100 || enemies[i].getX() + viewX > width+100 || enemies[i].getY1() + viewY < -100 || enemies[i].getY() + viewY > height+100))
+            if (!     (enemies[i].getX1() + viewX < -(GameConfig.ENEMY_SENSOR*levelnr)
+                    || enemies[i].getX()  + viewX > width + (GameConfig.ENEMY_SENSOR*levelnr)
+                    || enemies[i].getY1() + viewY < - (GameConfig.ENEMY_SENSOR*levelnr)
+                    || enemies[i].getY()  + viewY > height + (GameConfig.ENEMY_SENSOR*levelnr)))
             {
                 result.add(enemies[i]);
             }

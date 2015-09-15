@@ -3,6 +3,8 @@ package objects;
 import java.util.ArrayList;
 
 import processing.core.PShape;
+import processing.test.akira_neu.GameActivity;
+import processing.test.akira_neu.GameConfig;
 
 
 /**
@@ -11,10 +13,13 @@ import processing.core.PShape;
 public class Enemy extends AbstractObject
 {
 
+    private int level;
 
-    public Enemy(PShape shape, PShape img)
+    public Enemy(PShape shape, PShape img, int level)
     {
+
         super(shape, img);
+        this.level=level;
     }
 
     public void update(ArrayList<StaticBlock> vb, Player player)
@@ -25,8 +30,8 @@ public class Enemy extends AbstractObject
 
     private void findPlayer(Player player)
     {
-        setXSpeed((player.getCenterX() - getCenterX()) * (float) 0.03);
-        setYSpeed((player.getCenterY()- getCenterY())*(float)0.03);
+        setXSpeed((player.getCenterX() - getCenterX()) * GameConfig.ENEMY_ACCELERATION* level);
+        setYSpeed((player.getCenterY() - getCenterY()) * GameConfig.ENEMY_ACCELERATION * level);
     }
 
 }
