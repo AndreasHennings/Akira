@@ -9,6 +9,7 @@ import objects.Gold;
 import objects.Player;
 import objects.StaticBlock;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PShape;
 
 
@@ -16,6 +17,7 @@ public class GameActivity extends PApplet
 {
     private boolean gameRunning;
     private boolean nextLevel;
+    PImage bckgrndImg;
 
     private PShape level;  //Declaring a new .svg file. 'Level' contains all information about
     public int levelnr = GameConfig.START_LEVEL;
@@ -45,7 +47,7 @@ public class GameActivity extends PApplet
 
     public void setup() //everything inside will be done just once
     {
-        orientation(PORTRAIT);
+        orientation(LANDSCAPE);
 
         gameRunning=true;
         nextLevel=false;
@@ -73,6 +75,8 @@ public class GameActivity extends PApplet
             blockshape = loadShape("blockshape.svg");
             enemyshape = loadShape("qualle.svg");
             goldshape = loadShape("gold.svg");
+
+            bckgrndImg =loadImage("sea.png");
 
         }
         goldcoins = new Gold[((int) random(GameConfig.MIN_GOLD, GameConfig.MAX_GOLD))];
@@ -283,7 +287,9 @@ public class GameActivity extends PApplet
 
     private void display()
     {
-        background(200-map(player.getCenterY(), 0, level.height, 0, 200),200-map(player.getCenterY(),0,level.height, 0, 200) ,255);
+       // bckgrndImg(200-map(player.getCenterY(), 0, level.height, 0, 200),200-map(player.getCenterY(),0,level.height, 0, 200) ,255);
+        background(0,0,255);
+        image(bckgrndImg,viewX,viewY,level.width,level.height);
         scroll();
         drawBlocks();
         drawEnemies();
@@ -294,8 +300,17 @@ public class GameActivity extends PApplet
 
     private void scroll()
     {
-        viewX=width/2-player.getCenterX();
-        viewY = height/2-player.getCenterY();
+        if (player.getCenterX() > width/2 &&
+            player.getCenterX() < level.width-width/2)
+        {
+            viewX = width / 2 - player.getCenterX();
+        }
+
+        if (player.getCenterY() > height/2 &&
+            player.getCenterY() < level.height-height/2)
+        {
+            viewY = height / 2 - player.getCenterY();
+        }
     }
 
     private void drawBlocks()
