@@ -46,7 +46,8 @@ public class Player extends AbstractObject
 
     public void update(ArrayList<StaticBlock>vb, ArrayList<Enemy> ve, ArrayList<Gold> vg)
     {
-        setYSpeed(ySpeed+GameConfig.GRAVITY);
+        setYSpeed(ySpeed*GameConfig.DRAG+GameConfig.GRAVITY);
+        setXSpeed(xSpeed*GameConfig.DRAG);
 
         collideEnemy(ve);
         collideGold(vg);
