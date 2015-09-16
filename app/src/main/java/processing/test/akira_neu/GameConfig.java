@@ -17,4 +17,11 @@ public class GameConfig
     //Enemies
     public static final int ENEMY_SENSOR = 50;
     public static final float ENEMY_ACCELERATION = (float) 0.01;
+
+    //GUI
+    public static final float PROPORTIONAL_TEXTSIZE = (float) 0.025;
+    public static final int TEXT_XPOS = 20;
+    public static final int TEXT_YPOS = 50;
+    public static final float MINIMAP_SIZE = (float) 0.2;
+
 }

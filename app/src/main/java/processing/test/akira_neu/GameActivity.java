@@ -336,10 +336,21 @@ public class GameActivity extends PApplet
     private void drawGui()
     {
         fill(255, player.health, player.health);
-        textSize(height / 30);
-        text("Health: " + player.getHealth() + "/" + player.MAXHEALTH + " * Gold: " + player.getGold() + "/" + goldcoins.length+" * Score: "+getScore(), width / 20, height / 20);
+        textSize((int) (height * GameConfig.PROPORTIONAL_TEXTSIZE));
+        text("Health: "
+                + player.getHealth()
+                + "/" + player.MAXHEALTH
+                + " * Gold: "
+                + player.getGold()
+                + "/" + goldcoins.length
+                +" * Score: "
+                +getScore()
+                , GameConfig.TEXT_XPOS, GameConfig.TEXT_YPOS);
 
-        shape(level, width - width / 5, height - height / 5, width / 5, height / 5);
+        shape(level, width - width*GameConfig.MINIMAP_SIZE,
+                     height - height*GameConfig.MINIMAP_SIZE,
+                     width*GameConfig.MINIMAP_SIZE,
+                     height*GameConfig.MINIMAP_SIZE);
     }
 
 
@@ -398,20 +409,20 @@ public class GameActivity extends PApplet
             fill(255, 0, 0);
             if (nextLevel==false)
             {
-                textSize(height / 10);
-                text("GAME OVER!", 30, height / 2 - height / 10);
-                textSize(height / 20);
-                text("Your Score: " + getScore(), 30, height / 2);
-                text("Wipe Screen to exit", 30, height / 2 + height / 10);
+                textSize(height * GameConfig.PROPORTIONAL_TEXTSIZE *2);
+                text("GAME OVER!", GameConfig.TEXT_XPOS, height / 2 - height / 10);
+                textSize (height * GameConfig.PROPORTIONAL_TEXTSIZE);
+                text("Your Score: " + getScore(), GameConfig.TEXT_XPOS, height / 2);
+                text("Wipe Screen to exit", GameConfig.TEXT_XPOS, height / 2 + height / 10);
             }
 
             if (nextLevel)
             {
-                textSize(height / 10);
-                text("Level UP!", 30, height / 2 - height / 10);
-                textSize(height / 20);
-                text("Your Score: " + getScore(), 30, height / 2);
-                text("Wipe Screen for next Level", 30, height / 2 + height / 10);
+                textSize(height * GameConfig.PROPORTIONAL_TEXTSIZE *2);
+                text("LEVEL UP!", GameConfig.TEXT_XPOS, height / 2 - height / 10);
+                textSize (height * GameConfig.PROPORTIONAL_TEXTSIZE);
+                text("Your Score: " + getScore(), GameConfig.TEXT_XPOS, height / 2);
+                text("Wipe Screen to exit", GameConfig.TEXT_XPOS, height / 2 + height / 10);
             }
 
     }
