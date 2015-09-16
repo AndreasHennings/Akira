@@ -10,6 +10,14 @@ public class GameConfig
     public static final int MIN_GOLD = 10;
     public static final int MAX_GOLD = 20;
 
+    //AbstractObjects
+    public static final float MAX_SPEED = 50;
+    public static final float BOUNCE = (float) -0.1;
+
+    //Player
+    public final static int MAXHEALTH =100;
+    public final static float GRAVITY = (float) 0.3;
+
     //Gold
     public static final int BORDER_DISTANCE = 200;
     public static final int BLOCK_DISTANCE = 30;

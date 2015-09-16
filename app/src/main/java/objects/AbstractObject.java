@@ -3,6 +3,7 @@ package objects;
 import java.util.ArrayList;
 
 import processing.core.PShape;
+import processing.test.akira_neu.GameConfig;
 
 /**
  * Created by aend on 02.09.15.
@@ -20,9 +21,6 @@ public class AbstractObject
     float w;
     float h;
 
-    float x1;
-    float y1;
-
     float xSpeed;
     float ySpeed;
 
@@ -30,7 +28,6 @@ public class AbstractObject
     {
         this.shape = shape;
         this.img = img;
-        type='0';
 
 
         float[] params = shape.getParams();
@@ -92,13 +89,13 @@ public class AbstractObject
     {
         this.xSpeed = xSpeed;
 
-        if (xSpeed > 10)
+        if (xSpeed > GameConfig.MAX_SPEED)
         {
-            xSpeed = 10;
+            xSpeed = GameConfig.MAX_SPEED;
         }
-        if (xSpeed < -10)
+        if (xSpeed < -GameConfig.MAX_SPEED)
         {
-            xSpeed = -10;
+            xSpeed = -GameConfig.MAX_SPEED;
         }
     }
 
@@ -106,13 +103,13 @@ public class AbstractObject
     {
         this.ySpeed = ySpeed;
 
-        if (ySpeed > 10)
+        if (ySpeed > GameConfig.MAX_SPEED)
         {
-            ySpeed = 10;
+            ySpeed = GameConfig.MAX_SPEED;
         }
-        if (ySpeed < -10)
+        if (ySpeed < -GameConfig.MAX_SPEED)
         {
-            ySpeed = -10;
+            ySpeed = -GameConfig.MAX_SPEED;
         }
     }
 
@@ -137,12 +134,12 @@ public class AbstractObject
 
                 if (!(x + xSpeed > other.getX1() || getX1() + xSpeed < other.getX()))
                 {
-                    setXSpeed(xSpeed*(float)-0.1);
+                    setXSpeed(xSpeed*GameConfig.BOUNCE);
                 }
 
                 if (!(y + ySpeed > other.getY1()) || getY1() + ySpeed < other.getY())
                 {
-                    setYSpeed(ySpeed*(float)-0.1);
+                    setYSpeed(ySpeed*GameConfig.BOUNCE);
                 }
 
                 break;

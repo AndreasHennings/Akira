@@ -254,7 +254,7 @@ public class GameActivity extends PApplet
 
     private void updatePlayer()
     {
-        if (player.health < player.MAXHEALTH && (frameCount%100==0)) {player.health++;}
+        if (player.health < GameConfig.MAXHEALTH && (frameCount%100==0)) {player.health++;}
 
         player.update(visibleBlocks, visibleEnemies, visibleGold);
     }
@@ -339,7 +339,7 @@ public class GameActivity extends PApplet
         textSize((int) (height * GameConfig.PROPORTIONAL_TEXTSIZE));
         text("Health: "
                 + player.getHealth()
-                + "/" + player.MAXHEALTH
+                + "/" + GameConfig.MAXHEALTH
                 + " * Gold: "
                 + player.getGold()
                 + "/" + goldcoins.length
