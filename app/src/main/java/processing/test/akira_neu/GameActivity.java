@@ -34,14 +34,13 @@ public class GameActivity extends PApplet
     private ArrayList<StaticBlock> visibleBlocks;
     private ArrayList<Gold> visibleGold;
 
+    private int score;
+
     //view parameters
     private float viewX;  // parameters needed for scrolling view. Determine the position of the
     private float viewY;  // upper left corner of the level
 
-    public int getLevelnr()
-    {
-        return levelnr;
-    }
+
 
 
     public void setup() //everything inside will be done just once
@@ -69,6 +68,7 @@ public class GameActivity extends PApplet
 
         if (levelnr==GameConfig.START_LEVEL)
         {
+            score=0;
             playershape = loadShape("playershape.svg");
             blockshape = loadShape("blockshape.svg");
             enemyshape = loadShape("qualle.svg");
@@ -94,6 +94,7 @@ public class GameActivity extends PApplet
 
         else
         {
+
             gameOver();
         }
     }
@@ -337,14 +338,18 @@ public class GameActivity extends PApplet
     {
         fill(255, player.health, player.health);
         textSize((int) (height * GameConfig.PROPORTIONAL_TEXTSIZE));
-        text("Health: "
+        text(
+                "Level: "
+                +levelnr
+                +" * "
+                +"Health: "
                 + player.getHealth()
                 + "/" + GameConfig.MAXHEALTH
                 + " * Gold: "
                 + player.getGold()
                 + "/" + goldcoins.length
                 +" * Score: "
-                +getScore()
+                + score + getScore()
                 , GameConfig.TEXT_XPOS, GameConfig.TEXT_YPOS);
 
         shape(level, width - width*GameConfig.MINIMAP_SIZE,
@@ -386,9 +391,12 @@ public class GameActivity extends PApplet
 
         else
         {
+
             if (nextLevel)
             {
                 levelnr++;
+                score+=1000;
+                score+=player.getGold()*100;
                 setup();
             }
 
@@ -425,11 +433,13 @@ public class GameActivity extends PApplet
                 text("Wipe Screen to exit", GameConfig.TEXT_XPOS, height / 2 + height / 10);
             }
 
+
+
     }
 
     private int getScore()
     {
-        return (levelnr-1)*1000+player.getGold()*100+player.getHealth();
+        return score+player.getGold()*100;
     }
 }
 
