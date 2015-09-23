@@ -83,6 +83,8 @@ public class AbstractObject
 
     public PShape getImg() {return img;}
 
+
+
     public void setXSpeed(float xSpeed)
     {
         this.xSpeed = xSpeed;
