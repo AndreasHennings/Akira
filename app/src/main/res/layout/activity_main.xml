@@ -23,7 +23,15 @@
         android:layout_height="wrap_content"
         android:text="@string/description_label"
         android:id="@+id/description_button"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Resume Last Game"
+        android:id="@+id/button"
         android:layout_below="@+id/start_button"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="60dp"/>
+        android:layout_marginTop="40dp" />
 </RelativeLayout>
