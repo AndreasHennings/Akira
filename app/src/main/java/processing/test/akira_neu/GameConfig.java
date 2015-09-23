@@ -6,7 +6,7 @@ package processing.test.akira_neu;
 public class GameConfig
 {
     //Level
-    public static final int START_LEVEL = 4;
+    public static final int START_LEVEL = 1;
     public static final int MIN_GOLD = 10;
     public static final int MAX_GOLD = 20;
 
