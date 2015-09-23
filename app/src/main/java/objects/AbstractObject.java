@@ -13,8 +13,6 @@ public class AbstractObject
     PShape shape;
     PShape img;
 
-    public char type;
-
     //position and dimension
     float x;
     float y;
@@ -41,7 +39,7 @@ public class AbstractObject
 
     }
 
-    public char getType() {return type;}
+
 
     public float getX()
     {
@@ -89,34 +87,39 @@ public class AbstractObject
     {
         this.xSpeed = xSpeed;
 
-        if (xSpeed > GameConfig.MAX_SPEED)
+        if (this.xSpeed > GameConfig.MAX_SPEED)
         {
-            xSpeed = GameConfig.MAX_SPEED;
+            this.xSpeed = GameConfig.MAX_SPEED;
         }
-        if (xSpeed < -GameConfig.MAX_SPEED)
+        if (this.xSpeed < -GameConfig.MAX_SPEED)
         {
-            xSpeed = -GameConfig.MAX_SPEED;
+            this.xSpeed = -GameConfig.MAX_SPEED;
         }
+
     }
 
     public void setYSpeed(float ySpeed)
     {
         this.ySpeed = ySpeed;
 
-        if (ySpeed > GameConfig.MAX_SPEED)
+        if (this.ySpeed > GameConfig.MAX_SPEED)
         {
-            ySpeed = GameConfig.MAX_SPEED;
+            this.ySpeed = GameConfig.MAX_SPEED;
         }
-        if (ySpeed < -GameConfig.MAX_SPEED)
+        if (this.ySpeed < -GameConfig.MAX_SPEED)
         {
-            ySpeed = -GameConfig.MAX_SPEED;
+            this.ySpeed = -GameConfig.MAX_SPEED;
         }
+
+
     }
 
 
     public void update(ArrayList<StaticBlock> others)
     {
         collideBlock(others);
+
+
         x+=xSpeed;
         y+=ySpeed;
 

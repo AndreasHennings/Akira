@@ -433,17 +433,17 @@ public class GameActivity extends PApplet
             if (nextLevel==false)
             {
                 textSize(height * GameConfig.PROPORTIONAL_TEXTSIZE *2);
-                text("GAME OVER!", GameConfig.TEXT_XPOS, height / 2 - height / 10);
+                text("GAME OVER!", width/10, height / 2 - height / 10);
                 textSize (height * GameConfig.PROPORTIONAL_TEXTSIZE);
-                text("Wipe Screen to exit", GameConfig.TEXT_XPOS, height / 2 + height / 10);
+                text("Wipe Screen to exit", width/10, height / 2 + height / 10);
             }
 
             if (nextLevel)
             {
                 textSize(height * GameConfig.PROPORTIONAL_TEXTSIZE *2);
-                text("LEVEL UP!", GameConfig.TEXT_XPOS, height / 2 - height / 10);
+                text("LEVEL UP!", width/10, height / 2 - height / 10);
                 textSize (height * GameConfig.PROPORTIONAL_TEXTSIZE);
-                text("Wipe Screen to exit", GameConfig.TEXT_XPOS, height / 2 + height / 10);
+                text("Wipe Screen to exit", width/10, height / 2 + height / 10);
             }
 
 
