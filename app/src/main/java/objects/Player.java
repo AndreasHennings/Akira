@@ -19,10 +19,13 @@ public class Player extends AbstractObject
 
     public Player(PShape shape, PShape img)
     {
+
         super(shape, img);
         health= GameConfig.MAXHEALTH;
         gold=0;
         facing=1;
+        this.w=img.width;
+        this.h=img.height;
 
     }
 

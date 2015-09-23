@@ -36,7 +36,7 @@ public class GameActivity extends PApplet
     private ArrayList<StaticBlock> visibleBlocks;
     private ArrayList<Gold> visibleGold;
 
-    private int score;
+
 
     //view parameters
     private float viewX;  // parameters needed for scrolling view. Determine the position of the
@@ -70,8 +70,8 @@ public class GameActivity extends PApplet
 
         if (levelnr==GameConfig.START_LEVEL)
         {
-            score=0;
-            playershape = loadShape("playershape.svg");
+
+            playershape = loadShape("mermaid.svg");
             blockshape = loadShape("blockshape.svg");
             enemyshape = loadShape("qualle.svg");
             goldshape = loadShape("gold.svg");
@@ -189,6 +189,7 @@ public class GameActivity extends PApplet
 
 
     /**********************************************************************************************/
+
     /**********************************************************************************************/
 
 
@@ -287,7 +288,7 @@ public class GameActivity extends PApplet
 
     private void display()
     {
-       // bckgrndImg(200-map(player.getCenterY(), 0, level.height, 0, 200),200-map(player.getCenterY(),0,level.height, 0, 200) ,255);
+
         background(0,0,255);
         image(bckgrndImg,viewX,viewY,level.width,level.height);
         scroll();
@@ -363,14 +364,15 @@ public class GameActivity extends PApplet
                 + " * Gold: "
                 + player.getGold()
                 + "/" + goldcoins.length
-                +" * Score: "
-                + score + getScore()
                 , GameConfig.TEXT_XPOS, GameConfig.TEXT_YPOS);
 
-        shape(level, width - width*GameConfig.MINIMAP_SIZE,
-                     height - height*GameConfig.MINIMAP_SIZE,
+        shapeMode(CORNER);
+        shape(level, width - (width*GameConfig.MINIMAP_SIZE),
+                     height - (height*GameConfig.MINIMAP_SIZE),
                      width*GameConfig.MINIMAP_SIZE,
                      height*GameConfig.MINIMAP_SIZE);
+
+
     }
 
 
@@ -410,8 +412,6 @@ public class GameActivity extends PApplet
             if (nextLevel)
             {
                 levelnr++;
-                score+=1000;
-                score+=player.getGold()*100;
                 setup();
             }
 
@@ -435,7 +435,6 @@ public class GameActivity extends PApplet
                 textSize(height * GameConfig.PROPORTIONAL_TEXTSIZE *2);
                 text("GAME OVER!", GameConfig.TEXT_XPOS, height / 2 - height / 10);
                 textSize (height * GameConfig.PROPORTIONAL_TEXTSIZE);
-                text("Your Score: " + getScore(), GameConfig.TEXT_XPOS, height / 2);
                 text("Wipe Screen to exit", GameConfig.TEXT_XPOS, height / 2 + height / 10);
             }
 
@@ -444,7 +443,6 @@ public class GameActivity extends PApplet
                 textSize(height * GameConfig.PROPORTIONAL_TEXTSIZE *2);
                 text("LEVEL UP!", GameConfig.TEXT_XPOS, height / 2 - height / 10);
                 textSize (height * GameConfig.PROPORTIONAL_TEXTSIZE);
-                text("Your Score: " + getScore(), GameConfig.TEXT_XPOS, height / 2);
                 text("Wipe Screen to exit", GameConfig.TEXT_XPOS, height / 2 + height / 10);
             }
 
@@ -452,9 +450,6 @@ public class GameActivity extends PApplet
 
     }
 
-    private int getScore()
-    {
-        return score+player.getGold()*100;
-    }
+
 }
 
