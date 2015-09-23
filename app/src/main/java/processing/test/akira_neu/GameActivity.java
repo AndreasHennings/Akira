@@ -364,7 +364,7 @@ public class GameActivity extends PApplet
                 + " * Gold: "
                 + player.getGold()
                 + "/" + goldcoins.length
-                , GameConfig.TEXT_XPOS, GameConfig.TEXT_YPOS);
+                , width/10, height/10);
 
         shapeMode(CORNER);
         shape(level, width - (width*GameConfig.MINIMAP_SIZE),
