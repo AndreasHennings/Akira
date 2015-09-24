@@ -68,8 +68,6 @@ public class GameActivity extends PApplet
             gameOver();
         }
 
-        if (levelnr==GameConfig.START_LEVEL)
-        {
 
             playershape = loadShape("mermaid.svg");
             blockshape = loadShape("blockshape.svg");
@@ -78,7 +76,7 @@ public class GameActivity extends PApplet
 
             bckgrndImg =loadImage("sea.png");
 
-        }
+
         goldcoins = new Gold[((int) random(GameConfig.MIN_GOLD, GameConfig.MAX_GOLD))];
 
         initObjects();  //see below for details
